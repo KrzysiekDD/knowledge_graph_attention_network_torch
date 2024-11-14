@@ -12,13 +12,17 @@
 %	TITLE SECTION
 %----------------------------------------------------------------------------------------
 
-\title{An Article Title That Spans Multiple\\ Lines to Show Line Wrapping} % Article title, use manual lines breaks (\\) to beautify the layout
-
+\title{Knowledge Graph Attention Network Review}
+\author{Babiński Michał \\
+        Dymanowski Krzysztof \\
+        Wesołowski Jędrzej \\
+        Gdańsk University of Technology \\
+        \texttt{TODO}}
 % Authors are listed in a comma-separated list with superscript numbers indicating affiliations
 % \thanks{} is used for any text that should be placed in a footnote on the first page, such as the corresponding author's email, journal acceptance dates, a copyright/license notice, keywords, etc
-\author{%
-	John Smith\textsuperscript{1,2}, Robert Smith\textsuperscript{3} and Jane Smith\textsuperscript{1}\thanks{Corresponding author: \href{mailto:jane@smith.com}{jane@smith.com}\\ \textbf{Received:} October 20, 2023, \textbf{Published:} December 14, 2023}
-}
+% \author{%
+% 	John Smith\textsuperscript{1,2}, Robert Smith\textsuperscript{3} and Jane Smith\textsuperscript{1}\thanks{Corresponding author: \href{mailto:jane@smith.com}{jane@smith.com}\\ \textbf{Received:} October 20, 2023, \textbf{Published:} December 14, 2023}
+% }
 
 % Affiliations are output in the \date{} command
 \date{\footnotesize\textsuperscript{\textbf{1}}School of Chemistry, The University of Michigan\\ \textsuperscript{\textbf{2}}Physics Department, The University of Wisconsin\\ \textsuperscript{\textbf{3}}Biological Sciences Department, The University of Minnesota}
@@ -256,98 +260,330 @@
 	Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Donec tempus magna non mauris gravida luctus. Cras vitae arcu vitae mauris eleifend scelerisque. Nam sem sapien, vulputate nec felis eu, blandit convallis risus. Pellentesque sollicitudin venenatis tincidunt. In et ipsum libero. Nullam tempor ligula a massa convallis pellentesque. Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Donec tempus magna non mauris gravida luctus. Cras vitae arcu vitae mauris eleifend scelerisque. Nam sem sapien, vulputate nec felis eu, blandit convallis risus. Pellentesque sollicitudin venenatis tincidunt. In et ipsum libero. Nullam tempor ligula a massa convallis pellentesque.
 	
 	%------------------------------------------------
-	
-	\section{Results}
-	
-	\begin{table} % Single column table
-		\caption{Example single column table.}
-		\centering
-		\begin{tabular}{l l r}
-			\toprule
-			\multicolumn{2}{c}{Location} \\
-			\cmidrule(r){1-2}
-			East Distance & West Distance & Count \\
-			\midrule
-			100km & 200km & 422 \\
-			350km & 1000km & 1833 \\
-			600km & 1200km & 890 \\
-			\bottomrule
-		\end{tabular}
-		\label{tab:distcounts}
-	\end{table}
-	
-	Referencing a table using its label: Table \ref{tab:distcounts}.
-	
-	\begin{table*} % Full width table (notice the starred environment)
-		\caption{Example two column table with fixed-width columns.}
-		\centering % Horizontally center the table
-		\begin{tabular}{L{0.2\linewidth} L{0.2\linewidth} R{0.15\linewidth}} % Manually specify column alignments with L{}, R{} or C{} and widths as a fixed amount, usually as a proportion of \linewidth
-			\toprule
-			\multicolumn{2}{c}{Location} \\
-			\cmidrule(r){1-2}
-			East Distance & West Distance & Count \\
-			\midrule
-			100km & 200km & 422 \\
-			350km & 1000km & 1833 \\
-			600km & 1200km & 890 \\
-			\bottomrule
-		\end{tabular}
-	\end{table*}
-	
-	Aenean feugiat pellentesque venenatis. Sed faucibus tristique tortor vel ultrices. Donec consequat tellus sapien. Nam bibendum urna mauris, eget sagittis justo gravida vel. Mauris nisi lacus, malesuada sit amet neque ut, venenatis tempor orci. Curabitur feugiat sagittis molestie. Duis euismod arcu vitae quam scelerisque facilisis. Praesent volutpat eleifend tortor, in malesuada dui egestas id. Donec finibus ac risus sed pellentesque. Donec malesuada non magna nec feugiat. Mauris eget nibh nec orci congue porttitor vitae eu erat. Sed commodo ipsum ipsum, in elementum neque gravida euismod. Cras mi lacus, pulvinar ut sapien ut, rutrum sagittis dui. Donec non est a metus varius finibus. Pellentesque rutrum pellentesque ligula, vitae accumsan nulla hendrerit ut.
-	
-	\begin{figure} % Single column figure
-		\includegraphics[width=\linewidth]{Tolmukapea.jpg}
-		\caption{Anther of thale cress (Arabidopsis thaliana), fluorescence micrograph. Source: Heiti Paves, \href{https://commons.wikimedia.org/wiki/File:Tolmukapea.jpg}{https://commons.wiki-\\media.org/wiki/File:Tolmukapea.jpg}.}
-		\label{fig:tcanther}
-	\end{figure}
-	
-	Referencing a figure using its label: Figure \ref{fig:tcanther}.
-	
-	Aenean porttitor eros non pharetra congue. Proin in odio in dolor luctus auctor ac et mi. Etiam euismod mi sed lectus fringilla pretium. Phasellus tristique maximus lectus et sodales. Mauris feugiat ligula quis semper luctus. Nam sit amet felis sed leo fermentum aliquet. Mauris arcu dui, posuere id sem eget, cursus pulvinar mi. Donec nec lacus non lectus fermentum scelerisque et at nibh. Sed tristique, metus ac vestibulum porta, tortor lectus placerat lorem, et convallis tellus dolor eget ante. Pellentesque dui ligula, hendrerit a purus et, volutpat tempor lectus. Mauris nec purus nec mauris rhoncus pellentesque. Quisque quis diam sed est lacinia congue. Donec magna est, hendrerit sed metus vel, accumsan rutrum nibh.
-	
-	\begin{figure*} % Two column figure (notice the starred environment)
-		\includegraphics[width=\linewidth]{Fibroblastid.jpg}
-		\caption{Bovine pulmonary artery endothelial cells in culture. Blue: nuclei; red: mitochondria; green: microfilaments. Computer generated image from a 3D model based on a confocal laser scanning microscopy using fluorescent marker dyes. Source: Heiti Paves, \href{https://commons.wikimedia.org/wiki/File:Fibroblastid.jpg}{https://commons.wikimedia.org/wiki/File:Fibroblastid.jpg}.}
-		\label{fig:bpartery}
-	\end{figure*}
-	
-	Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam cursus lectus purus, tempus iaculis quam dictum tristique. Nam interdum sapien nec tempor mattis. Quisque id sapien nisi. Mauris vehicula ornare eros vel efficitur. Nulla consectetur, turpis quis fringilla tincidunt, mi neque iaculis lectus, vel commodo elit odio non ex. Duis facilisis, purus ac viverra iaculis, turpis lectus ultrices ante, ac vestibulum ligula magna in libero. Etiam tristique maximus lacinia. Vestibulum hendrerit, lacus malesuada laoreet blandit, sapien velit sollicitudin nunc, eu porttitor urna ligula at lorem. Aliquam faucibus eros in fermentum venenatis. Fusce consectetur congue pellentesque. Suspendisse at nisi sit amet est porttitor cursus. Cras placerat faucibus nunc, a laoreet justo dignissim sit amet.
-	
-	\subsection{International Support}
-	
-	\noindent àáâäãåèéêëìíîïòóôöõøùúûüÿýñçčšž
-	
-	\noindent ÀÁÂÄÃÅÈÉÊËÌÍÎÏÒÓÔÖÕØÙÚÛÜŸÝÑ
-	
-	\noindent ßÇŒÆČŠŽ
-	
-	\subsection{Links}
-	
-	This is a clickable URL link: \href{https://www.latextemplates.com}{LaTeX Templates}. This is a clickable email link: \href{mailto:vel@latextemplates.com}{vel@latextemplates.com}. This is a clickable monospaced URL link: \url{https://www.LaTeXTemplates.com}.
-	
-	%------------------------------------------------
-	
-	\section{Discussion}
-	
-	This statement requires citation \autocite{Smith:2023qr}. This statement requires multiple citations \autocite{Smith:2023qr, Smith:2024jd}. This statement contains an in-text citation, for directly referring to a citation like so: \textcite{Smith:2024jd}.
-	
-	\subsection{Subsection One}
-	
-	Suspendisse potenti. Vivamus suscipit dapibus metus. Proin auctor iaculis ex, id fermentum lectus dapibus tristique. Nullam maximus eros eget leo pretium dapibus. Nunc in auctor erat, id interdum risus. Suspendisse aliquet vehicula accumsan. In vestibulum efficitur dictum. Sed ultrices, libero nec fringilla feugiat, elit massa auctor ligula, vehicula tempor ligula felis in lectus. Suspendisse sem dui, pharetra ut sodales eu, suscipit sit amet felis. Donec pretium viverra ante, ac pulvinar eros. Suspendisse gravida consectetur urna. Pellentesque vitae leo porta, imperdiet eros eget, posuere sem. Praesent eget leo efficitur odio bibendum condimentum sit amet vel ex. Nunc maximus quam orci, quis pulvinar nibh eleifend ac. Quisque consequat lacus magna, eu posuere tellus iaculis ac. Sed vitae tortor tincidunt ante sagittis iaculis.
-	
-	\subsection{Subsection Two}
-	
-	Nullam mollis tellus lorem, sed congue ipsum euismod a. Donec pulvinar neque sed ligula ornare sodales. Nulla sagittis vel lectus nec laoreet. Nulla volutpat malesuada turpis at ultricies. Ut luctus velit odio, sagittis volutpat erat aliquet vel. Donec ac neque eget neque volutpat mollis. Vestibulum viverra ligula et sapien bibendum, vel vulputate ex euismod. Curabitur nec velit velit. Aliquam vulputate lorem elit, id tempus nisl finibus sit amet. Curabitur ex turpis, consequat at lectus id, imperdiet molestie augue. Curabitur eu eros molestie purus commodo hendrerit. Quisque auctor ipsum nec mauris malesuada, non fringilla nibh viverra. Quisque gravida, metus quis semper pulvinar, dolor nisl suscipit leo, vestibulum volutpat ante justo ultrices diam. Sed id facilisis turpis, et aliquet eros.
-	
-	\subsubsection{Subsubsection Example}
-	
-	Duis venenatis eget lectus a aliquet. Integer vulputate ante suscipit felis feugiat rutrum. Aliquam eget dolor eu augue elementum ornare. Nulla fringilla interdum volutpat. Sed tincidunt, neque quis imperdiet hendrerit, turpis sapien ornare justo, ac blandit felis sem quis diam. Proin luctus urna sit amet felis tincidunt, sed congue nunc pellentesque. Ut faucibus a magna faucibus finibus. Etiam id mi euismod, auctor nisi eget, pretium metus. Proin tincidunt interdum mi non interdum. Donec semper luctus dolor at elementum. Aenean eu congue tortor, sed hendrerit magna. Quisque a dolor ante. Mauris semper id urna id gravida. Vestibulum mi tortor, finibus eu felis in, vehicula aliquam mi.
-	
-	Aliquam arcu turpis, ultrices sed luctus ac, vehicula id metus. Morbi eu feugiat velit, et tempus augue. Proin ac mattis tortor. Donec tincidunt, ante rhoncus luctus semper, arcu lorem lobortis justo, nec convallis ante quam quis lectus. Aenean tincidunt sodales massa, et hendrerit tellus mattis ac. Sed non pretium nibh. 
-	
-	Donec cursus maximus luctus. Vivamus lobortis eros et massa porta porttitor. Nam vitae suscipit mi. Pellentesque ex tellus, iaculis vel libero at, cursus pretium sapien. Curabitur accumsan velit sit amet nulla lobortis, ut pretium ex aliquam. Proin eget volutpat orci. Morbi eu aliquet turpis. Vivamus molestie urna quis tempor tristique. Proin hendrerit sem nec tempor sollicitudin.
-	
+		
+		
+	\section{Introduction}
+	What are knowledge graphs? Why are they important? What is the problem the authors are trying to solve by using KG in an attention network for a recommender algorithm?
+
+	\section{Task 1}
+	W pierwszym etapie projektu studenci wybierają artykuł naukowy
+	z zadanej przez prowadzącą puli dostępnych artykułów i analizują go.
+	W pierwszej kolejności studenci powinni skupić się na poruszanym w artykule
+	problemie naukowym oraz na opisie istniejących sposobów podejścia do
+	danego problemu (o ile istnieją). Jeżeli takie rozwiązania istnieją, należy
+	dowiedzieć się, jakie są ich zalety oraz wady, które zachęciły autorów
+	wybranego artykułu do podjęcia danej tematyki.
+	Kolejnym krokiem w Etapie I jest zrozumienie zaproponowanego
+	w artykule algorytmu lub metody. Studenci powinni szczegółowo przeanalizować
+	przebieg algorytmu, wszystkie parametry stałe i zmienne oraz format
+	przyjmowanych i zwracanych danych oraz etap procesu rekomendacji, w którym
+	algorytm/metoda zostały dodane/zmodyfikowane (w zależności od wybranego
+	przez studenta artykułu).
+	Na zakończenie pierwszego etapu studenci powinni dokonać refleksji nad
+	poznanym algorytmem oraz problemem, który miał rozwiązywać i odpowiedzieć
+	na kilka pytań:
+	\begin{itemize}
+		\item Jakie są wady i zalety proponowanej w artykule metody?
+		\item Czym różni się od wcześniejszych rozwiązań?
+		\item Czy jest uniwersalna? Jeśli nie, to jakie są jej ograniczenia?
+		\item Czy rzeczywiście rozwiązuje opisywany problem? Jeśli nie, to dlaczego?
+		\item Czy widzisz sposób na ulepszenie/modyfikację proponowanego w artykule algorytmu? Jeśli tak, to na czym ta modyfikacja polega?
+	\end{itemize}
+
+	\subsection{Sprawozdanie do Etapu I}
+	Sprawozdanie z Etapu I powinno zawierać podstawowe informacje
+	o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków
+	zespołu projektowego oraz informacje o analizowanym artykule, tj. nazwiska
+	autorów i tytuł. 
+	Poniżej podano wymagane elementy merytoryczne sprawozdania.
+	\begin{enumerate}
+		\item Motywacje
+		\begin{enumerate}
+			\item Poruszany w artykule problem z opisem, dlaczego jest ważny dla dziedziny.
+			\item Istniejące rozwiązania problemu wraz z ich zaletami i wadami.
+			\item Informacja, dlaczego autorzy analizowanego artykułu zajęli się tą tematyką.
+			\item Dlaczego autorzy uważają, że ich metoda rozwiąże lub pomoże rozwiązać w przyszłości dany problem.
+		\end{enumerate}
+		\item Algorytm
+		\begin{enumerate}
+			\item Szczegółowy opis algorytmu, najlepiej dodatkowo zilustrowany pseudokodem lub schematem blokowym.
+			\item Identyfikacja wszystkich parametrów algorytmu:
+			\begin{enumerate}
+				\item stałe wraz z ich wartościami
+				\item zmienne wraz z możliwym zakresem (i co się zmienia dla różnych wartości)
+			\end{enumerate}
+			\item Identyfikacja formatu danych:
+			\begin{enumerate}
+				\item Wymagany format danych wejściowych.
+				\item Format zwracanych danych.
+			\end{enumerate}
+			\item Analiza procesu rekomendacji – w którym etapie procesu rekomendacji proponowany algorytm jest wykorzystywany.
+		\end{enumerate}
+		\item Wnioski
+		\begin{enumerate}
+			\item Jakie są wady i zalety proponowanej w artykule metody?
+			\item Czym różni się od wcześniejszych rozwiązań?
+			\item Czy jest uniwersalna? Jeśli nie, to jakie są jej ograniczenia?
+			\item Czy rzeczywiście rozwiązuje opisywany problem? Jeśli nie, to dlaczego?
+			\item Czy widzisz sposób na ulepszenie/modyfikację proponowanego w artykule algorytmu? Jeśli tak, to na czym ta modyfikacja polega?
+		\end{enumerate}
+	\end{enumerate}
+
+	\section{Task 2}
+	W drugim etapie projektu studenci analizują kod dołączony do wybranego
+	w pierwszym etapie artykułu naukowego. W pierwszej kolejności studenci
+	powinni skupić się na sposobie zaimplementowania proponowanej przez
+	autorów artykułu metody, w tym na poprawność implementacji oraz ciekawe
+	rozwiązania techniczne.
+	W kolejnym kroku studenci powinni przeanalizować sposób
+	przeprowadzenia eksperymentu. Jaki zbiór danych został użyty? W jaki sposób
+	dokonano podziału danych? Z jakich metod i miar skorzystano? Czy protokół
+	oceny algorytmu odpowiada problemowi, który autorzy artykułu chcieli
+	rozwiązać?
+	W ostatniej części etapu studenci powinni powtórzyć eksperyment opisany
+	w wybranym artykule z wykorzystaniem analizowanego we wcześniejszych
+	krokach kodu. Co należy zrobić, aby uruchomić kod? Czy wystarczy jedno
+	uruchomienie, czy np. istnieje plik konfiguracyjny, który należy modyfikować,
+	aby otrzymać wszystkie raportowane w artykule wyniki? Czy wyniki zgadzają się
+	z tym, które zostały zaraportowane w artykule przez autorów? Jeżeli nie, to
+	dlaczego tak jest? Jakie mogą być tego konsekwencje?
+
+	\subsection{Prezentacja do Etapu II}
+	Prezentacja z Etapu II powinna zawierać podstawowe informacje
+	o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków
+	zespołu projektowego oraz informacje o analizowanym artykule, tj. nazwiska
+	autorów i tytuł. 
+	Poniżej podano elementy merytoryczne prezentacji. (Jeżeli czegoś z poniższych
+	nie można zastosować dla konkretnego tematu, to powinno zostać pominięte – 
+	ewentualnie umieszczone na slajdzie, ale nie omówione podczas prezentacji.)
+	\begin{enumerate}
+		\item Omówienie algorytmu, czyli streszczenie etapu 1 celem zrozumienia
+		dalszej części prezentacji przez kolegów (tylko i aż tyle!).
+		\item Analiza kodu
+		\begin{enumerate}
+			\item Poprawność implementacji (błędy metody i merytoryczne, tj.
+			niezgodność z opisem metody).
+			\item Ciekawe rozwiązania techniczne, np. optymalizacja obliczeń itp.
+		\end{enumerate}
+		\item Opis użytego w eksperymencie zbioru/zbiorów danych
+		\begin{enumerate}
+			\item Jaki był cel zbierania zbioru?
+			\item Kto jest twórcą/właścicielem zbioru?
+			\item Jakie dane zawiera?
+			\item Co one oznaczają?
+			\item Jakie są wartości dla podstawowych charakterystyk zbioru danych?
+			\begin{enumerate}
+				\item Ilość ocen, użytkowników i produktów.
+				\item Średnie ilości ocen na użytkownika/produkt.
+				\item Gęstość macierzy ocen.
+				\item Dodatkowe informacje zawarte w zbiorze charakterystyczne dla
+				rozwiązywanego problemu/proponowanej metody.
+			\end{enumerate}
+		\end{enumerate}
+		\item Analiza eksperymentu
+		\begin{enumerate}
+			\item Z jakich metod ewaluacji skorzystano?
+			\item Z jakich miar oceny systemów rekomendacyjnych skorzystano? Dlaczego?
+			\item Czy wykorzystano odpowiedni zbiór danych do rozwiązywanego
+			problemu?
+			\item W jaki sposób dokonano podziału danych? Czy przeprowadzano na
+			nich jakieś dodatkowe transformacje?
+			\item Czy protokół oceny algorytmu odpowiada problemowi, który autorzy
+			artykułu chcieli rozwiązać?
+		\end{enumerate}
+		\item Wykonanie kodu
+		\begin{enumerate}
+			\item W jaki sposób uruchamia się program?
+			\item Czy istnieją jakieś pliki konfiguracyjne? Jakie? Do czego służą?
+			\item Jak długo trzeba czekać na wyniki? (nie wymaga się podawania
+			dokładnych danych).
+		\end{enumerate}
+		\item Wyniki i wnioski
+		\begin{enumerate}
+			\item Wyniki własnego wykonania w zestawieniu z wynikami z artykułu.
+			\item Czy wyniki się różnią?
+			\item Jaka może być tego przyczyna?
+			\item Jakie mogą być tego konsekwencje?
+			\item Czy uważasz, że algorytm został poprawnie zwalidowany? Dlaczego?
+			\item Czy widzisz sposób na ulepszenie/modyfikację tego eksperymentu?
+		\end{enumerate}
+	\end{enumerate}
+
+	\section{Task 3}
+	W trzecim etapie projektu studenci, korzystając z wiedzy zdobytej 
+	w poprzednich dwóch etapach projektu, proponują własną modyfikację algorytmu 
+	i/lub eksperymentu przeprowadzonego przez autorów oryginalnego artykułu i 
+	planują eksperyment mający na celu weryfikację zaproponowanej modyfikacji.
+	Na początku studenci powinni przemyśleć możliwe modyfikacje, które 
+	zidentyfikowali w poprzednich sprawozdaniach. Można też rozszerzyć pulę 
+	o nowe propozycje. Studenci powinni opisać wszystkie zidentyfikowane przez 
+	siebie możliwe modyfikacje, zarówno samego algorytmu, jak i eksperymentu (nie 
+	obliguje to do implementacji wszystkich rozszerzeń w kolejnym etapie).
+	Podczas opisu każdej z możliwych modyfikacji algorytmu i/lub 
+	eksperymentu, studenci powinni rozważyć następujące kwestie:
+	\begin{itemize}
+		\item Na czym polega dana modyfikacja?
+		\item W jaki sposób zmieni ona sposób wykonania algorytmu/eksperymentu?
+		\item W którym miejscu w kodzie będą wprowadzone zmiany?
+		\item Jakie są motywacje wprowadzenia danej modyfikacji?
+		\item Czy pozwoli ona ulepszyć algorytm/eksperyment? W jaki sposób?
+		\item W przypadku modyfikacji eksperymentu powinno się rozważyć również pytania:
+		\begin{itemize}
+			\item Jaką nową wiedzę o metodzie możemy zyskać dzięki danej modyfikacji eksperymentu?
+			\item Do czego w praktyce może się ta wiedza przydać?
+		\end{itemize}
+	\end{itemize}
+	W ostatniej części etapu trzeciego studenci wybierają dwie modyfikacje i 
+	planują dla nich eksperymenty. Należy również uzasadnić wybór modyfikacji do 
+	implementacji.
+	Plan eksperymentu powinien zawierać informacje o tym, co będzie badane 
+	i w jaki sposób. Studenci powinni zidentyfikować wszystkie zmienne zależne i
+	niezależne, w tym również hiperparametry wymagające wcześniejszego 
+	strojenia. Każdy krok eksperymentu powinien być dokładnie zaplanowany i 
+	opisany. Ważny jest również wybór i opis zbiorów danych do eksperymentu.
+
+	\subsection{Prezentacja do Etapu III}
+	Prezentacja z Etapu III powinna zawierać podstawowe informacje 
+	o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków zespołu 
+	projektowego oraz informacje o analizowanym artykule, tj. nazwiska autorów i 
+	tytuł. 
+	Poniżej podano wymagane elementy merytoryczne sprawozdania.
+	Prezentacja powinna trwać 10-12 minut.
+	\begin{enumerate}
+		\item Możliwe modyfikacje
+		\begin{itemize}
+			\item Dla każdej zidentyfikowanej możliwej modyfikacji, studenci powinni rozważyć następujące elementy:
+			\begin{enumerate}
+				\item Istota modyfikacji
+				\begin{itemize}
+					\item Typ modyfikacji (algorytmu czy eksperymentu).
+					\item Na czym polega dana modyfikacja?
+					\item W jaki sposób zmieni ona sposób wykonania algorytmu/eksperymentu?
+					\item W którym miejscu w kodzie będą wprowadzone zmiany?
+				\end{itemize}
+				\item Motywacje do wprowadzenia danej modyfikacji
+				\begin{itemize}
+					\item Jakie są motywacje wprowadzenia danej modyfikacji?
+					\item Czy pozwoli ona ulepszyć algorytm/eksperyment? W jaki sposób?
+					\item Opcjonalne (tylko w przypadku modyfikacji eksperymentu): Jaką nową wiedzę o metodzie możemy zyskać dzięki danej modyfikacji eksperymentu? Do czego w praktyce może się ta wiedza przydać?
+				\end{itemize}
+			\end{enumerate}
+		\end{itemize}
+		\item Plan eksperymentu
+		\begin{enumerate}
+			\item Wybór modyfikacji
+			\begin{itemize}
+				\item Która z powyższych modyfikacji została wybrana do implementacji? Dlaczego akurat ta?
+			\end{itemize}
+			\item Opis eksperymentu
+			\begin{itemize}
+				\item Dokładny opis planowanego eksperymentu.
+				\item Jakie zbiory danych zostaną wykorzystane?
+				\item Jakie kroki zostaną przeprowadzone?
+				\item Co będziemy badać?
+				\item Jakie będą zmienne zależne a jakie niezależne w projektowanym eksperymencie?
+				\item Czy będą wykorzystywane miary jakości systemów rekomendacyjnych? Jeśli tak, to jakie?
+				\item Czy wymagane jest wcześniejsze strojenie hiperparametrów modelu? Jeżeli tak, to których i w jaki sposób będzie wykonane?
+			\end{itemize}
+		\end{enumerate}
+	\end{enumerate}
+
+	\section{Task 4}
+	W czwartym etapie projektu studenci, korzystając z planu eksperymentu
+	zaprojektowanego w trzecim etapie, przeprowadzają eksperyment naukowy,
+	analizują jego wyniki i formułują wnioski.
+	W pierwszej części czwartego etapu studenci powinni wykonać dwa
+	eksperymenty zgodnie z planem opisanym w sprawozdaniu do etapu trzeciego.
+	Istotna jest tutaj zgodność z opisanym planem. Jeżeli wystąpią jakiekolwiek
+	trudności z realizacją zaplanowanych w eksperymencie czynności, studenci
+	powinni opisać te problemy wraz z rozwiązaniem, które zostało zastosowane.
+	Wszelkie modyfikacje planu również powinny zostać skrupulatnie opisane.
+	Po wykonaniu każdego z eksperymentów, studenci powinni zebrać
+	otrzymane wyniki w wygodnej do analizy formie, np. wykres, tabela. Dobrze by
+	było, gdyby zostały przedstawione w takiej formie, która umożliwia porównanie
+	otrzymanych wyników z tymi z oryginalnego artykułu (w uzasadnionych
+	przypadkach nie jest to konieczne). Otrzymane wyniki powinny zostać
+	przeanalizowane samodzielnie, jak również porównane z tymi z oryginalnego
+	artykułu (o ile to możliwe). Na podstawie planu modyfikacji i wyników oraz
+	oryginalnego artykułu, studenci powinni wyciągnąć wnioski z przeprowadzonych
+	badań (dla każdego eksperymentu osobno).
+	W ostatniej części etapu czwartego studenci podsumowują pracę ze
+	wszystkich dotychczasowych etapów i wyciągają wnioski końcowe. Kluczowe
+	jest zidentyfikowanie, czy podczas przeprowadzonych eksperymentów powstała
+	nowa wiedza o badanym algorytmie (i opisanie jej, jeśli tak). Możliwe jest tu
+	uwzględnienie wszelkich uwag dotyczących oryginalnej metody, procedury
+	ewaluacji, zaimplementowanych modyfikacjach i otrzymanych wyników.
+
+	\subsection{Prezentacja do Etapu IV}
+	Prezentacja z Etapu IV powinna zawierać podstawowe informacje
+	o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków
+	zespołu projektowego oraz informacje o analizowanym artykule, tj. nazwiska
+	autorów i tytuł. 
+	Poniżej podano ramowe elementy merytoryczne sprawozdania.
+	\begin{enumerate}
+		\item Analizowany algorytm
+		\begin{itemize}
+			\item Krótkie przypomnienie, co robi analizowany algorytm.
+		\end{itemize}
+		\item Eksperymenty
+		\begin{enumerate}
+			\item Przebieg eksperymentu
+			\begin{itemize}
+				\item Dokładny opis przeprowadzonego eksperymentu.
+				\item Czy udało się przeprowadzić modyfikację zgodnie z założonym planem? Jeśli nie, to co się zmieniło?
+				\item Czy wystąpiły jakieś niespodziewane problemy? Jeśli tak, to jakie?
+			\end{itemize}
+			\item Wyniki
+			\begin{itemize}
+				\item Dokładny opis otrzymanych wyników z eksperymentu wraz z tabelami i/lub wykresami.
+			\end{itemize}
+			\item Porównanie wyników i wnioski
+			\begin{itemize}
+				\item Czy wyniki różnią się od wyników otrzymanych przez autorów oryginalnego artykułu? Jeśli tak, to czy są lepsze czy gorsze? Jak myślisz, dlaczego tak jest?
+				\item Jeśli modyfikacją było nowe zastosowanie metody, to czy po przeprowadzonym eksperymencie możemy uznać, że metoda sprawdzi się w tym zastosowaniu? Dlaczego? Itd.
+			\end{itemize}
+		\end{enumerate}
+		\item Wnioski końcowe
+		\begin{itemize}
+			\item Co możesz powiedzieć o oryginalnym algorytmie i własnych modyfikacjach po przeprowadzeniu eksperymentów?
+			\item Czy możesz wysnuć jakieś wnioski z wszystkich eksperymentów (z artykułu i własnych)?
+			\item Czy powstała nowa wiedza podczas realizacji projektu? Jeśli tak, to jaka? Itp.
+		\end{itemize}
+	\end{enumerate}
+
+	\section{Task 5}
+	\subsection{Przebieg Etapu V}
+	W piątym etapie projektu studenci przygotowują artykuł naukowy zgodnie
+	z załączonym szablonem.
+	Artykuł powinien zawierać wszystkie kluczowe informacje dotyczące
+	wszystkich wcześniejszych etapów projektu, ze szczególnym naciskiem na etap
+	czwarty (własny eksperyment i wnioski).
+
+	\subsection{Sprawozdanie do Etapu V}
+	Sprawozdanie z Etapu V będzie stanowił artykuł naukowy, który powinien
+	zawierać podstawowe informacje o autorach, tj. imiona i nazwiska wszystkich
+	członków zespołu projektowego oraz informacje o analizowanym artykule, tj.
+	nazwiska autorów i tytuł. Ponadto, artykuł powinien zawierać następujące
+	elementy:
+	\begin{enumerate}
+		\item Wprowadzenie do problematyki.
+		\item Przegląd stanu wiedzy/istniejących modyfikacji algorytmu
+		\item Analizowany algorytm
+		\item Przeprowadzone eksperymenty wraz z wynikami
+		\item Wnioski końcowe
+	\end{enumerate}
+	Dokładny dobór treści w ramach punktów jest pozostawiony studentom
+	i podlega ocenie.
+	Artykuł powinien być napisany w języku angielskim z wykorzystaniem
+	załączonego szablonu LaTeX. Długość artykułu powinna wynosić 10-14 stron
+	(łącznie z bibliografią).
+
+	\subsection{Forma i sposób zaliczenia Etapu V}
+	Za etap można otrzymać maksymalnie 8 punktów. Do zaliczenia zadania
+	wymagane jest otrzymanie minimum 4 punkty. Oceniany będzie dobór i sposób
+	zaprezentowania treści. Termin wgrania artykułów upływa 21.01.2024 o godz.
+	23:59.
+
 	%----------------------------------------------------------------------------------------
 	%	 REFERENCES
 	%----------------------------------------------------------------------------------------
