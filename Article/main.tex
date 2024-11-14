@@ -1,0 +1,351 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{cite}
+
+\title{Knowledge Graph Attention Network Review}
+\author{Babiński Michał \\
+        Dymanowski Krzysztof \\
+        Wesołowski Jędrzej \\
+        Gdańsk University of Technology \\
+        \texttt{TODO}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Knowledge graphs are cool man.
+\end{abstract}
+
+\section{Introduction}
+What are knowledge graphs? Why are they important? What is the problem the authors are trying to solve by using KG in an attention network for a recommender algorithm?
+
+\section{Task 1}
+W pierwszym etapie projektu studenci wybierają artykuł naukowy
+z zadanej przez prowadzącą puli dostępnych artykułów i analizują go.
+W pierwszej kolejności studenci powinni skupić się na poruszanym w artykule
+problemie naukowym oraz na opisie istniejących sposobów podejścia do
+danego problemu (o ile istnieją). Jeżeli takie rozwiązania istnieją, należy
+dowiedzieć się, jakie są ich zalety oraz wady, które zachęciły autorów
+wybranego artykułu do podjęcia danej tematyki.
+Kolejnym krokiem w Etapie I jest zrozumienie zaproponowanego
+w artykule algorytmu lub metody. Studenci powinni szczegółowo przeanalizować
+przebieg algorytmu, wszystkie parametry stałe i zmienne oraz format
+przyjmowanych i zwracanych danych oraz etap procesu rekomendacji, w którym
+algorytm/metoda zostały dodane/zmodyfikowane (w zależności od wybranego
+przez studenta artykułu).
+Na zakończenie pierwszego etapu studenci powinni dokonać refleksji nad
+poznanym algorytmem oraz problemem, który miał rozwiązywać i odpowiedzieć
+na kilka pytań:
+\begin{itemize}
+    \item Jakie są wady i zalety proponowanej w artykule metody?
+    \item Czym różni się od wcześniejszych rozwiązań?
+    \item Czy jest uniwersalna? Jeśli nie, to jakie są jej ograniczenia?
+    \item Czy rzeczywiście rozwiązuje opisywany problem? Jeśli nie, to dlaczego?
+    \item Czy widzisz sposób na ulepszenie/modyfikację proponowanego w artykule algorytmu? Jeśli tak, to na czym ta modyfikacja polega?
+\end{itemize}
+
+\subsection{Sprawozdanie do Etapu I}
+Sprawozdanie z Etapu I powinno zawierać podstawowe informacje
+o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków
+zespołu projektowego oraz informacje o analizowanym artykule, tj. nazwiska
+autorów i tytuł. 
+Poniżej podano wymagane elementy merytoryczne sprawozdania.
+\begin{enumerate}
+    \item Motywacje
+    \begin{enumerate}
+        \item Poruszany w artykule problem z opisem, dlaczego jest ważny dla dziedziny.
+        \item Istniejące rozwiązania problemu wraz z ich zaletami i wadami.
+        \item Informacja, dlaczego autorzy analizowanego artykułu zajęli się tą tematyką.
+        \item Dlaczego autorzy uważają, że ich metoda rozwiąże lub pomoże rozwiązać w przyszłości dany problem.
+    \end{enumerate}
+    \item Algorytm
+    \begin{enumerate}
+        \item Szczegółowy opis algorytmu, najlepiej dodatkowo zilustrowany pseudokodem lub schematem blokowym.
+        \item Identyfikacja wszystkich parametrów algorytmu:
+        \begin{enumerate}
+            \item stałe wraz z ich wartościami
+            \item zmienne wraz z możliwym zakresem (i co się zmienia dla różnych wartości)
+        \end{enumerate}
+        \item Identyfikacja formatu danych:
+        \begin{enumerate}
+            \item Wymagany format danych wejściowych.
+            \item Format zwracanych danych.
+        \end{enumerate}
+        \item Analiza procesu rekomendacji – w którym etapie procesu rekomendacji proponowany algorytm jest wykorzystywany.
+    \end{enumerate}
+    \item Wnioski
+    \begin{enumerate}
+        \item Jakie są wady i zalety proponowanej w artykule metody?
+        \item Czym różni się od wcześniejszych rozwiązań?
+        \item Czy jest uniwersalna? Jeśli nie, to jakie są jej ograniczenia?
+        \item Czy rzeczywiście rozwiązuje opisywany problem? Jeśli nie, to dlaczego?
+        \item Czy widzisz sposób na ulepszenie/modyfikację proponowanego w artykule algorytmu? Jeśli tak, to na czym ta modyfikacja polega?
+    \end{enumerate}
+\end{enumerate}
+
+\section{Task 2}
+W drugim etapie projektu studenci analizują kod dołączony do wybranego
+w pierwszym etapie artykułu naukowego. W pierwszej kolejności studenci
+powinni skupić się na sposobie zaimplementowania proponowanej przez
+autorów artykułu metody, w tym na poprawność implementacji oraz ciekawe
+rozwiązania techniczne.
+W kolejnym kroku studenci powinni przeanalizować sposób
+przeprowadzenia eksperymentu. Jaki zbiór danych został użyty? W jaki sposób
+dokonano podziału danych? Z jakich metod i miar skorzystano? Czy protokół
+oceny algorytmu odpowiada problemowi, który autorzy artykułu chcieli
+rozwiązać?
+W ostatniej części etapu studenci powinni powtórzyć eksperyment opisany
+w wybranym artykule z wykorzystaniem analizowanego we wcześniejszych
+krokach kodu. Co należy zrobić, aby uruchomić kod? Czy wystarczy jedno
+uruchomienie, czy np. istnieje plik konfiguracyjny, który należy modyfikować,
+aby otrzymać wszystkie raportowane w artykule wyniki? Czy wyniki zgadzają się
+z tym, które zostały zaraportowane w artykule przez autorów? Jeżeli nie, to
+dlaczego tak jest? Jakie mogą być tego konsekwencje?
+
+\subsection{Prezentacja do Etapu II}
+Prezentacja z Etapu II powinna zawierać podstawowe informacje
+o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków
+zespołu projektowego oraz informacje o analizowanym artykule, tj. nazwiska
+autorów i tytuł. 
+Poniżej podano elementy merytoryczne prezentacji. (Jeżeli czegoś z poniższych
+nie można zastosować dla konkretnego tematu, to powinno zostać pominięte – 
+ewentualnie umieszczone na slajdzie, ale nie omówione podczas prezentacji.)
+\begin{enumerate}
+    \item Omówienie algorytmu, czyli streszczenie etapu 1 celem zrozumienia
+    dalszej części prezentacji przez kolegów (tylko i aż tyle!).
+    \item Analiza kodu
+    \begin{enumerate}
+        \item Poprawność implementacji (błędy metody i merytoryczne, tj.
+        niezgodność z opisem metody).
+        \item Ciekawe rozwiązania techniczne, np. optymalizacja obliczeń itp.
+    \end{enumerate}
+    \item Opis użytego w eksperymencie zbioru/zbiorów danych
+    \begin{enumerate}
+        \item Jaki był cel zbierania zbioru?
+        \item Kto jest twórcą/właścicielem zbioru?
+        \item Jakie dane zawiera?
+        \item Co one oznaczają?
+        \item Jakie są wartości dla podstawowych charakterystyk zbioru danych?
+        \begin{enumerate}
+            \item Ilość ocen, użytkowników i produktów.
+            \item Średnie ilości ocen na użytkownika/produkt.
+            \item Gęstość macierzy ocen.
+            \item Dodatkowe informacje zawarte w zbiorze charakterystyczne dla
+            rozwiązywanego problemu/proponowanej metody.
+        \end{enumerate}
+    \end{enumerate}
+    \item Analiza eksperymentu
+    \begin{enumerate}
+        \item Z jakich metod ewaluacji skorzystano?
+        \item Z jakich miar oceny systemów rekomendacyjnych skorzystano? Dlaczego?
+        \item Czy wykorzystano odpowiedni zbiór danych do rozwiązywanego
+        problemu?
+        \item W jaki sposób dokonano podziału danych? Czy przeprowadzano na
+        nich jakieś dodatkowe transformacje?
+        \item Czy protokół oceny algorytmu odpowiada problemowi, który autorzy
+        artykułu chcieli rozwiązać?
+    \end{enumerate}
+    \item Wykonanie kodu
+    \begin{enumerate}
+        \item W jaki sposób uruchamia się program?
+        \item Czy istnieją jakieś pliki konfiguracyjne? Jakie? Do czego służą?
+        \item Jak długo trzeba czekać na wyniki? (nie wymaga się podawania
+        dokładnych danych).
+    \end{enumerate}
+    \item Wyniki i wnioski
+    \begin{enumerate}
+        \item Wyniki własnego wykonania w zestawieniu z wynikami z artykułu.
+        \item Czy wyniki się różnią?
+        \item Jaka może być tego przyczyna?
+        \item Jakie mogą być tego konsekwencje?
+        \item Czy uważasz, że algorytm został poprawnie zwalidowany? Dlaczego?
+        \item Czy widzisz sposób na ulepszenie/modyfikację tego eksperymentu?
+    \end{enumerate}
+\end{enumerate}
+
+\section{Task 3}
+W trzecim etapie projektu studenci, korzystając z wiedzy zdobytej 
+w poprzednich dwóch etapach projektu, proponują własną modyfikację algorytmu 
+i/lub eksperymentu przeprowadzonego przez autorów oryginalnego artykułu i 
+planują eksperyment mający na celu weryfikację zaproponowanej modyfikacji.
+Na początku studenci powinni przemyśleć możliwe modyfikacje, które 
+zidentyfikowali w poprzednich sprawozdaniach. Można też rozszerzyć pulę 
+o nowe propozycje. Studenci powinni opisać wszystkie zidentyfikowane przez 
+siebie możliwe modyfikacje, zarówno samego algorytmu, jak i eksperymentu (nie 
+obliguje to do implementacji wszystkich rozszerzeń w kolejnym etapie).
+Podczas opisu każdej z możliwych modyfikacji algorytmu i/lub 
+eksperymentu, studenci powinni rozważyć następujące kwestie:
+\begin{itemize}
+    \item Na czym polega dana modyfikacja?
+    \item W jaki sposób zmieni ona sposób wykonania algorytmu/eksperymentu?
+    \item W którym miejscu w kodzie będą wprowadzone zmiany?
+    \item Jakie są motywacje wprowadzenia danej modyfikacji?
+    \item Czy pozwoli ona ulepszyć algorytm/eksperyment? W jaki sposób?
+    \item W przypadku modyfikacji eksperymentu powinno się rozważyć również pytania:
+    \begin{itemize}
+        \item Jaką nową wiedzę o metodzie możemy zyskać dzięki danej modyfikacji eksperymentu?
+        \item Do czego w praktyce może się ta wiedza przydać?
+    \end{itemize}
+\end{itemize}
+W ostatniej części etapu trzeciego studenci wybierają dwie modyfikacje i 
+planują dla nich eksperymenty. Należy również uzasadnić wybór modyfikacji do 
+implementacji.
+Plan eksperymentu powinien zawierać informacje o tym, co będzie badane 
+i w jaki sposób. Studenci powinni zidentyfikować wszystkie zmienne zależne i
+niezależne, w tym również hiperparametry wymagające wcześniejszego 
+strojenia. Każdy krok eksperymentu powinien być dokładnie zaplanowany i 
+opisany. Ważny jest również wybór i opis zbiorów danych do eksperymentu.
+
+\subsection{Prezentacja do Etapu III}
+Prezentacja z Etapu III powinna zawierać podstawowe informacje 
+o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków zespołu 
+projektowego oraz informacje o analizowanym artykule, tj. nazwiska autorów i 
+tytuł. 
+Poniżej podano wymagane elementy merytoryczne sprawozdania.
+Prezentacja powinna trwać 10-12 minut.
+\begin{enumerate}
+    \item Możliwe modyfikacje
+    \begin{itemize}
+        \item Dla każdej zidentyfikowanej możliwej modyfikacji, studenci powinni rozważyć następujące elementy:
+        \begin{enumerate}
+            \item Istota modyfikacji
+            \begin{itemize}
+                \item Typ modyfikacji (algorytmu czy eksperymentu).
+                \item Na czym polega dana modyfikacja?
+                \item W jaki sposób zmieni ona sposób wykonania algorytmu/eksperymentu?
+                \item W którym miejscu w kodzie będą wprowadzone zmiany?
+            \end{itemize}
+            \item Motywacje do wprowadzenia danej modyfikacji
+            \begin{itemize}
+                \item Jakie są motywacje wprowadzenia danej modyfikacji?
+                \item Czy pozwoli ona ulepszyć algorytm/eksperyment? W jaki sposób?
+                \item Opcjonalne (tylko w przypadku modyfikacji eksperymentu): Jaką nową wiedzę o metodzie możemy zyskać dzięki danej modyfikacji eksperymentu? Do czego w praktyce może się ta wiedza przydać?
+            \end{itemize}
+        \end{enumerate}
+    \end{itemize}
+    \item Plan eksperymentu
+    \begin{enumerate}
+        \item Wybór modyfikacji
+        \begin{itemize}
+            \item Która z powyższych modyfikacji została wybrana do implementacji? Dlaczego akurat ta?
+        \end{itemize}
+        \item Opis eksperymentu
+        \begin{itemize}
+            \item Dokładny opis planowanego eksperymentu.
+            \item Jakie zbiory danych zostaną wykorzystane?
+            \item Jakie kroki zostaną przeprowadzone?
+            \item Co będziemy badać?
+            \item Jakie będą zmienne zależne a jakie niezależne w projektowanym eksperymencie?
+            \item Czy będą wykorzystywane miary jakości systemów rekomendacyjnych? Jeśli tak, to jakie?
+            \item Czy wymagane jest wcześniejsze strojenie hiperparametrów modelu? Jeżeli tak, to których i w jaki sposób będzie wykonane?
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+
+\section{Task 4}
+W czwartym etapie projektu studenci, korzystając z planu eksperymentu
+zaprojektowanego w trzecim etapie, przeprowadzają eksperyment naukowy,
+analizują jego wyniki i formułują wnioski.
+W pierwszej części czwartego etapu studenci powinni wykonać dwa
+eksperymenty zgodnie z planem opisanym w sprawozdaniu do etapu trzeciego.
+Istotna jest tutaj zgodność z opisanym planem. Jeżeli wystąpią jakiekolwiek
+trudności z realizacją zaplanowanych w eksperymencie czynności, studenci
+powinni opisać te problemy wraz z rozwiązaniem, które zostało zastosowane.
+Wszelkie modyfikacje planu również powinny zostać skrupulatnie opisane.
+Po wykonaniu każdego z eksperymentów, studenci powinni zebrać
+otrzymane wyniki w wygodnej do analizy formie, np. wykres, tabela. Dobrze by
+było, gdyby zostały przedstawione w takiej formie, która umożliwia porównanie
+otrzymanych wyników z tymi z oryginalnego artykułu (w uzasadnionych
+przypadkach nie jest to konieczne). Otrzymane wyniki powinny zostać
+przeanalizowane samodzielnie, jak również porównane z tymi z oryginalnego
+artykułu (o ile to możliwe). Na podstawie planu modyfikacji i wyników oraz
+oryginalnego artykułu, studenci powinni wyciągnąć wnioski z przeprowadzonych
+badań (dla każdego eksperymentu osobno).
+W ostatniej części etapu czwartego studenci podsumowują pracę ze
+wszystkich dotychczasowych etapów i wyciągają wnioski końcowe. Kluczowe
+jest zidentyfikowanie, czy podczas przeprowadzonych eksperymentów powstała
+nowa wiedza o badanym algorytmie (i opisanie jej, jeśli tak). Możliwe jest tu
+uwzględnienie wszelkich uwag dotyczących oryginalnej metody, procedury
+ewaluacji, zaimplementowanych modyfikacjach i otrzymanych wyników.
+
+\subsection{Prezentacja do Etapu IV}
+Prezentacja z Etapu IV powinna zawierać podstawowe informacje
+o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków
+zespołu projektowego oraz informacje o analizowanym artykule, tj. nazwiska
+autorów i tytuł. 
+Poniżej podano ramowe elementy merytoryczne sprawozdania.
+\begin{enumerate}
+    \item Analizowany algorytm
+    \begin{itemize}
+        \item Krótkie przypomnienie, co robi analizowany algorytm.
+    \end{itemize}
+    \item Eksperymenty
+    \begin{enumerate}
+        \item Przebieg eksperymentu
+        \begin{itemize}
+            \item Dokładny opis przeprowadzonego eksperymentu.
+            \item Czy udało się przeprowadzić modyfikację zgodnie z założonym planem? Jeśli nie, to co się zmieniło?
+            \item Czy wystąpiły jakieś niespodziewane problemy? Jeśli tak, to jakie?
+        \end{itemize}
+        \item Wyniki
+        \begin{itemize}
+            \item Dokładny opis otrzymanych wyników z eksperymentu wraz z tabelami i/lub wykresami.
+        \end{itemize}
+        \item Porównanie wyników i wnioski
+        \begin{itemize}
+            \item Czy wyniki różnią się od wyników otrzymanych przez autorów oryginalnego artykułu? Jeśli tak, to czy są lepsze czy gorsze? Jak myślisz, dlaczego tak jest?
+            \item Jeśli modyfikacją było nowe zastosowanie metody, to czy po przeprowadzonym eksperymencie możemy uznać, że metoda sprawdzi się w tym zastosowaniu? Dlaczego? Itd.
+        \end{itemize}
+    \end{enumerate}
+    \item Wnioski końcowe
+    \begin{itemize}
+        \item Co możesz powiedzieć o oryginalnym algorytmie i własnych modyfikacjach po przeprowadzeniu eksperymentów?
+        \item Czy możesz wysnuć jakieś wnioski z wszystkich eksperymentów (z artykułu i własnych)?
+        \item Czy powstała nowa wiedza podczas realizacji projektu? Jeśli tak, to jaka? Itp.
+    \end{itemize}
+\end{enumerate}
+
+\section{Task 5}
+\subsection{Przebieg Etapu V}
+W piątym etapie projektu studenci przygotowują artykuł naukowy zgodnie
+z załączonym szablonem.
+Artykuł powinien zawierać wszystkie kluczowe informacje dotyczące
+wszystkich wcześniejszych etapów projektu, ze szczególnym naciskiem na etap
+czwarty (własny eksperyment i wnioski).
+
+\subsection{Sprawozdanie do Etapu V}
+Sprawozdanie z Etapu V będzie stanowił artykuł naukowy, który powinien
+zawierać podstawowe informacje o autorach, tj. imiona i nazwiska wszystkich
+członków zespołu projektowego oraz informacje o analizowanym artykule, tj.
+nazwiska autorów i tytuł. Ponadto, artykuł powinien zawierać następujące
+elementy:
+\begin{enumerate}
+    \item Wprowadzenie do problematyki.
+    \item Przegląd stanu wiedzy/istniejących modyfikacji algorytmu
+    \item Analizowany algorytm
+    \item Przeprowadzone eksperymenty wraz z wynikami
+    \item Wnioski końcowe
+\end{enumerate}
+Dokładny dobór treści w ramach punktów jest pozostawiony studentom
+i podlega ocenie.
+Artykuł powinien być napisany w języku angielskim z wykorzystaniem
+załączonego szablonu LaTeX. Długość artykułu powinna wynosić 10-14 stron
+(łącznie z bibliografią).
+
+\subsection{Forma i sposób zaliczenia Etapu V}
+Za etap można otrzymać maksymalnie 8 punktów. Do zaliczenia zadania
+wymagane jest otrzymanie minimum 4 punkty. Oceniany będzie dobór i sposób
+zaprezentowania treści. Termin wgrania artykułów upływa 21.01.2024 o godz.
+23:59.
+
+\section{Conclusions}
+This section acknowledges the contributions of individuals and organizations that supported the research.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
