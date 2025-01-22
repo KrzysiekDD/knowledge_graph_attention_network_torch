@@ -25,13 +25,22 @@
 % }
 
 % Affiliations are output in the \date{} command
-\date{\footnotesize\textsuperscript{\textbf{1}}School of Chemistry, The University of Michigan\\ \textsuperscript{\textbf{2}}Physics Department, The University of Wisconsin\\ \textsuperscript{\textbf{3}}Biological Sciences Department, The University of Minnesota}
+\date{\footnotesize\textsuperscript{\textbf{1}}Gdansk University of Technology\\ \textsuperscript{\textbf{2}}Electronics and Information Science Department}
 
 % Full-width abstract
 \renewcommand{\maketitlehookd}{%
 	\begin{abstract}
-		\noindent Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie. Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl. Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit. Aliquam arcu turpis, ultrices sed luctus ac, vehicula id metus. Morbi eu feugiat velit, et tempus augue. Proin ac mattis tortor. Donec tincidunt, ante rhoncus luctus semper, arcu lorem lobortis justo, nec convallis ante quam quis lectus. Aenean tincidunt sodales massa, et hendrerit tellus mattis ac. Sed non pretium nibh. Donec cursus maximus luctus. Vivamus lobortis eros et massa porta porttitor.
-	\end{abstract}
+		\noindent Knowledge Graph Attention Network (KGAT) to system rekomendacyjny który łączy interakcje user-item (użytkownik-przedmiot) z 
+		bogatymi informacjami kontekstowymi z grafów wiedzy (KG). W przeciwieństwie do tradycyjnych metod, KGAT nie traktuje
+		 interakcji jako odizolowanych zdarzeń. Zamiast tego wychwytuje zależności wyższego rzędu między przedmiotami a ich atrybutami w połączonej strukturze 
+		 grafu wiedzy i grafu użytkownik-przedmiot. Dzięki zastosowaniu propagacji osadzeń i mechanizmów uwagi, KGAT identyfikuje istotne powiązania, oferując
+		  bardziej precyzyjne, zróżnicowane i wytłumaczalne rekomendacje.
+
+		W tym raporcie omawiamy, jak zmodernizować framework KGAT, wykorzystując najnowsze technologie w dziedzinie uczenia 
+		maszynowego opierającego się na grafach i umożliwiając uczenie modelu na maszynach GPU, co powinno wielokrotnie przyspieszyć uczenie. Dodatkowo testujemy jego 
+		działanie na nowym zestawie danych, aby sprawdzić, jak dobrze dostosowuje się 
+		i poprawia w różnych scenariuszach. Te eksperymenty mają za zadanie dać głębszy wgląd w to, jak te ulepszenia i różnice w danych wpływają na dokładność rekomendacji
+		 oraz zachowanie ich interpretowalności.\end{abstract}
 }
 
 %----------------------------------------------------------------------------------------
@@ -203,132 +212,49 @@
 	Największy problem sprawiało utworzenie samego zbioru danych, gdyż wymagało ono od nas opracowania grafu wiedzy. Ponadto, ontologia tego grafu nie opierała się na Freebase, tak jak w przypadku pozostałych zbiorów danych, więc nie jesteśmy do końca pewni jej poprawności. Największym ograniczeniem zaś był czas treningu modelu, dla 50 epok trening jednego modelu na cPU trwał około 20 godzin na stacji roboczej (z procesorem i7 14700). Po modernizacji kodu i środowiska tak, aby korzystać z GPU, czas treningu dla 50 epok skrócił się do około 2,5 godziny. 
 	\section{Introduction}
 	
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie. Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl. Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit.
-	
-	Aliquam arcu turpis, ultrices sed luctus ac, vehicula id metus. Morbi eu feugiat velit, et tempus augue. Proin ac mattis tortor. Donec tincidunt, ante rhoncus luctus semper, arcu lorem lobortis justo, nec convallis ante quam quis lectus. Aenean tincidunt sodales massa, et hendrerit tellus mattis ac. Sed non pretium nibh. Donec cursus maximus luctus. Vivamus lobortis eros et massa porta porttitor. Donec laoreet nisl vel risus lacinia elementum non nec lacus. Nullam luctus, nulla volutpat ultricies ultrices, quam massa placerat augue, ut fringilla urna lectus nec nibh. Vestibulum efficitur condimentum orci a semper. Pellentesque ut metus pretium lacus maximus semper.
-	
-	Fusce varius orci ac magna dapibus porttitor. In tempor leo a neque bibendum sollicitudin. Nulla pretium fermentum nisi, eget sodales magna facilisis eu. Praesent aliquet nulla ut bibendum lacinia. Donec vel mauris vulputate, commodo ligula ut, egestas orci. Suspendisse commodo odio sed hendrerit lobortis. Donec finibus eros erat, vel ornare enim mattis et. Donec finibus dolor quis dolor tempus consequat. Mauris fringilla dui id libero egestas, ut mattis neque ornare. Ut condimentum urna pharetra ipsum consequat, eu interdum elit cursus. Vivamus scelerisque tortor et nunc ultricies, id tincidunt libero pharetra. Aliquam eu imperdiet leo. Morbi a massa volutpat velit condimentum convallis et facilisis dolor.
-	
-	\begin{equation}
-		\cos^3 \theta =\frac{1}{4}\cos\theta+\frac{3}{4}\cos 3\theta
-		\label{eq:example}
-	\end{equation}
-	
-	Automatically referencing an equation number using its label: Equation \ref{eq:example}.
-	
-	In hac habitasse platea dictumst. Curabitur mattis elit sit amet justo luctus vestibulum. In hac habitasse platea dictumst. Pellentesque lobortis justo enim, a condimentum massa tempor eu. Ut quis nulla a quam pretium eleifend nec eu nisl. Nam cursus porttitor eros, sed luctus ligula convallis quis. Nam convallis, ligula in auctor euismod, ligula mauris fringilla tellus, et egestas mauris odio eget diam. Praesent sodales in ipsum eu dictum. Aenean vel enim ipsum. Fusce ut felis at eros sagittis bibendum mollis lobortis libero.
-	
-	Maecenas consectetur metus at tellus finibus condimentum. Proin arcu lectus, ultrices non tincidunt et, tincidunt ut quam. Integer luctus posuere est, non maximus ante dignissim quis. Nunc a cursus erat. Curabitur suscipit nibh in tincidunt sagittis. Nam malesuada vestibulum quam id gravida. Proin ut dapibus velit. Vestibulum eget quam quis ipsum semper convallis. Duis consectetur nibh ac diam dignissim, id condimentum enim dictum. Nam aliquet ligula eu magna pellentesque, nec sagittis leo lobortis. Aenean tincidunt dignissim egestas.
-	
-	%------------------------------------------------
-	
-	\section{Methodologies}
-	
-	\subsection{Sample Sites \& Processing}
-	
-	This line shows how to use a footnote to further explain or cite text\footnote{Example footnote text.}.
-	
-	This is a bullet point list:
-	
-	\begin{itemize}
-		\item Arcu eros accumsan lorem, at posuere mi diam sit amet tortor
-		\item Fusce fermentum, mi sit amet euismod rutrum
-		\item Sem lorem molestie diam, iaculis aliquet sapien tortor non nisi
-		\item Pellentesque bibendum pretium aliquet
-	\end{itemize}
-	
-	Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Donec tempus magna non mauris gravida luctus. Cras vitae arcu vitae mauris eleifend scelerisque. Nam sem sapien, vulputate nec felis eu, blandit convallis risus. Pellentesque sollicitudin venenatis tincidunt. In et ipsum libero. Nullam tempor ligula a massa convallis pellentesque.
-	
-	This is a numbered list:
-	
-	\begin{enumerate}
-		\item Donec dolor arcu, rutrum id molestie in, viverra sed diam
-		\item Curabitur feugiat
-		\item Turpis sed auctor facilisis
-	\end{enumerate}
-	
-	\subsection{Species Identification}
-	
-	Proin lobortis efficitur dictum. Pellentesque vitae pharetra eros, quis dignissim magna. Sed tellus leo, semper non vestibulum vel, tincidunt eu mi. Aenean pretium ut velit sed facilisis. Ut placerat urna facilisis dolor suscipit vehicula. Ut ut auctor nunc. Nulla non massa eros. Proin rhoncus arcu odio, eu lobortis metus sollicitudin eu. Duis maximus ex dui, id bibendum diam dignissim id. Aliquam quis lorem lorem. Phasellus sagittis aliquet dolor, vulputate cursus dolor convallis vel. Suspendisse eu tellus feugiat, bibendum lectus quis, fermentum nunc. Nunc euismod condimentum magna nec bibendum. Curabitur elementum nibh eu sem cursus, eu aliquam leo rutrum. Sed bibendum augue sit amet pharetra ullamcorper. Aenean congue sit amet tortor vitae feugiat.
-	
-	Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Donec tempus magna non mauris gravida luctus. Cras vitae arcu vitae mauris eleifend scelerisque. Nam sem sapien, vulputate nec felis eu, blandit convallis risus. Pellentesque sollicitudin venenatis tincidunt. In et ipsum libero. Nullam tempor ligula a massa convallis pellentesque.
-	
-	\subsection{Data Analysis}
-	
-	Vestibulum sodales orci a nisi interdum tristique. In dictum vehicula dui, eget bibendum purus elementum eu. Pellentesque lobortis mattis mauris, non feugiat dolor vulputate a. Cras porttitor dapibus lacus at pulvinar. Praesent eu nunc et libero porttitor malesuada tempus quis massa. Aenean cursus ipsum a velit ultricies sagittis. Sed non leo ullamcorper, suscipit massa ut, pulvinar erat. Aliquam erat volutpat. Nulla non lacus vitae mi placerat tincidunt et ac diam. Aliquam tincidunt augue sem, ut vestibulum est volutpat eget. Suspendisse potenti. Integer condimentum, risus nec maximus elementum, lacus purus porta arcu, at ultrices diam nisl eget urna. Curabitur sollicitudin diam quis sollicitudin varius. Ut porta erat ornare laoreet euismod. In tincidunt purus dui, nec egestas dui convallis non. In vestibulum ipsum in dictum scelerisque.
-	
-	Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Donec tempus magna non mauris gravida luctus. Cras vitae arcu vitae mauris eleifend scelerisque. Nam sem sapien, vulputate nec felis eu, blandit convallis risus. Pellentesque sollicitudin venenatis tincidunt. In et ipsum libero. Nullam tempor ligula a massa convallis pellentesque. Mauris interdum porttitor fringilla. Proin tincidunt sodales leo at ornare. Donec tempus magna non mauris gravida luctus. Cras vitae arcu vitae mauris eleifend scelerisque. Nam sem sapien, vulputate nec felis eu, blandit convallis risus. Pellentesque sollicitudin venenatis tincidunt. In et ipsum libero. Nullam tempor ligula a massa convallis pellentesque.
-	
-	%------------------------------------------------
-		
-		
-	\section{Introduction}
-	What are knowledge graphs? Why are they important? What is the problem the authors are trying to solve by using KG in an attention network for a recommender algorithm?
+	\section{Opis metody}
+	Sieci grafowe, takie jak Knowledge Graph Attention Network, wykorzystują graf wiedzy  do wzbogacenia systemów rekomendacyjnych. W tradycyjnych metodach, takich jak filtrowanie kolaboracyjne
+	czy modele nadzorowanego uczenia, interakcje użytkownika z przedmiotami traktowane są jako niezależne zdarzenia, co ogranicza zdolność do wykorzystania informacji kontekstowych takich jak atrybuty przedmiotów, profile użytkowników itp.
 
-	\section{Task 1}
-	W pierwszym etapie projektu studenci wybierają artykuł naukowy
-	z zadanej przez prowadzącą puli dostępnych artykułów i analizują go.
-	W pierwszej kolejności studenci powinni skupić się na poruszanym w artykule
-	problemie naukowym oraz na opisie istniejących sposobów podejścia do
-	danego problemu (o ile istnieją). Jeżeli takie rozwiązania istnieją, należy
-	dowiedzieć się, jakie są ich zalety oraz wady, które zachęciły autorów
-	wybranego artykułu do podjęcia danej tematyki.
-	Kolejnym krokiem w Etapie I jest zrozumienie zaproponowanego
-	w artykule algorytmu lub metody. Studenci powinni szczegółowo przeanalizować
-	przebieg algorytmu, wszystkie parametry stałe i zmienne oraz format
-	przyjmowanych i zwracanych danych oraz etap procesu rekomendacji, w którym
-	algorytm/metoda zostały dodane/zmodyfikowane (w zależności od wybranego
-	przez studenta artykułu).
-	Na zakończenie pierwszego etapu studenci powinni dokonać refleksji nad
-	poznanym algorytmem oraz problemem, który miał rozwiązywać i odpowiedzieć
-	na kilka pytań:
-	\begin{itemize}
-		\item Jakie są wady i zalety proponowanej w artykule metody?
-		\item Czym różni się od wcześniejszych rozwiązań?
-		\item Czy jest uniwersalna? Jeśli nie, to jakie są jej ograniczenia?
-		\item Czy rzeczywiście rozwiązuje opisywany problem? Jeśli nie, to dlaczego?
-		\item Czy widzisz sposób na ulepszenie/modyfikację proponowanego w artykule algorytmu? Jeśli tak, to na czym ta modyfikacja polega?
-	\end{itemize}
+KGAT wprowadza innowacyjne podejście, łącząc graf wiedzy z grafem użytkownik-przedmiot w jedną hybrydową strukturę - graf wiedzy kolaboracyjnej (CKG). 
+Istotnym jego elementem jest modelowanie relacji wyższego rzędu, które uwzględniają pośrednie powiązania między użytkownikami a przedmiotami poprzez wspólne atrybuty 
+(na przykład wspólny reżyser filmów któe można zarekomendować innemu użytkownikowi na bazie historii oglądania innego użytkownika). 
+Aby to osiągnąć, KGAT stosuje:
+Rekurencyjną propagację osadzeń(embeddings), w ramach któej osadzenia każdego węzła są aktualizowane na podstawie informacji od sąsiadów, co pozwala wydajnie uchwycić relacje wyższego rzędu, oraz 
+agregację opartą na uwadze (attention), czyli attention mechanism który pozwala modelowi przypisywać różne wagi sąsiadom, uwzględniając wagę ich istotności w kontekście rekomendacji.
+Zalety sieci grafowych:
+\begin{itemize}
+	\item Efektywne wykorzystanie informacji dodatkowych: Sieci grafowe skutecznie integrują cechy przedmiotów, profile użytkowników i inne dane kontekstowe, co poprawia wyniki rekomendacji.
+\item Modelowanie relacji wyższego rzędu: KGAT potrafi uchwycić dalekie powiązania między węzłami, co jest problematyczne dla tradycyjnych metod.
+\item Interpretowalność: Mechanizm uwagi pozwala interpretować, które relacje miały największy wpływ na wyniki modelu.
+\item Brak potrzeby ręcznego definiowania ścieżek: W przeciwieństwie do metod opartych na ścieżkach, KGAT nie wymaga ręcznego definiowania ścieżek, co oszczędza czas i zasoby.
+\end{itemize}
 
-	\subsection{Sprawozdanie do Etapu I}
-	Sprawozdanie z Etapu I powinno zawierać podstawowe informacje
-	o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków
-	zespołu projektowego oraz informacje o analizowanym artykule, tj. nazwiska
-	autorów i tytuł. 
-	Poniżej podano wymagane elementy merytoryczne sprawozdania.
-	\begin{enumerate}
-		\item Motywacje
-		\begin{enumerate}
-			\item Poruszany w artykule problem z opisem, dlaczego jest ważny dla dziedziny.
-			\item Istniejące rozwiązania problemu wraz z ich zaletami i wadami.
-			\item Informacja, dlaczego autorzy analizowanego artykułu zajęli się tą tematyką.
-			\item Dlaczego autorzy uważają, że ich metoda rozwiąże lub pomoże rozwiązać w przyszłości dany problem.
-		\end{enumerate}
-		\item Algorytm
-		\begin{enumerate}
-			\item Szczegółowy opis algorytmu, najlepiej dodatkowo zilustrowany pseudokodem lub schematem blokowym.
-			\item Identyfikacja wszystkich parametrów algorytmu:
-			\begin{enumerate}
-				\item stałe wraz z ich wartościami
-				\item zmienne wraz z możliwym zakresem (i co się zmienia dla różnych wartości)
-			\end{enumerate}
-			\item Identyfikacja formatu danych:
-			\begin{enumerate}
-				\item Wymagany format danych wejściowych.
-				\item Format zwracanych danych.
-			\end{enumerate}
-			\item Analiza procesu rekomendacji – w którym etapie procesu rekomendacji proponowany algorytm jest wykorzystywany.
-		\end{enumerate}
-		\item Wnioski
-		\begin{enumerate}
-			\item Jakie są wady i zalety proponowanej w artykule metody?
-			\item Czym różni się od wcześniejszych rozwiązań?
-			\item Czy jest uniwersalna? Jeśli nie, to jakie są jej ograniczenia?
-			\item Czy rzeczywiście rozwiązuje opisywany problem? Jeśli nie, to dlaczego?
-			\item Czy widzisz sposób na ulepszenie/modyfikację proponowanego w artykule algorytmu? Jeśli tak, to na czym ta modyfikacja polega?
-		\end{enumerate}
-	\end{enumerate}
+Wady sieci grafowych:
+\begin{itemize}
+	\item Wysokie wymagania obliczeniowe: Liczba węzłów i relacji rośnie eksponencjalnie wraz ze wzrostem złożoności grafu, co może być problematyczne dla większych problemów.
+	\item Złożoność modelowania relacji: Relacje wyższego rzędu wnoszą różny wkład do rekomendacji, co wymaga precyzyjnego ważenia i selekcji.
+	\item Brak interpretowalności w niektórych modelach: Chociaż KGAT stawia na interpretowalność, inne podejścia (np. regularizacyjne) mogą być trudniejsze do zrozumienia.
+\end{itemize}
+\section{Opis architektury}
+\subsection{Szczegółowy opis algorytmu}
+	
+Algorytm KGAT składa się z trzech głównych komponentów:
+\begin{itemize}
+	\item Warstwa osadzania: Parametryzuje każdy węzeł jako wektor, zachowując strukturę grafu wiedzy.
+	\item Warstwy propagacji osadzania z uwzględnieniem uwagi: Rekurencyjnie propagują osadzenia od sąsiadów węzła, aktualizując jego reprezentację i ucząc się wagi każdego sąsiada podczas propagacji.
+	\item Warstwa predykcji: Agreguje reprezentacje użytkownika i przedmiotu ze wszystkich warstw propagacji i zwraca przewidywany wynik dopasowania.
+\end{itemize}
+\subsection{Parametry Algorytmu}
+Wśród parametrów modelu możemy wyróżnić hiperparametry, w tym przypadku wymiar warstwy osadzeń i liczba wartsw propagacji. Dodatkowo algorytm dynamicznie wybiera rozmiary
+osadzeń w zależności od węzłów, co pozwala na bardziej elastyczne modelowanie relacji oraz wagi warstwy attention (warstwy uwagi. wagi uwagi brzmiały na tyle głupio że wolę używeać angielskiego).
+\subsection{Format danych wejściowych}
+Danymi wejściowymi grafu są trójki relacji między węzłami, w formacie (h, r, t), gdzie h to węzeł początkowy, r to relacja między węzłami, a t to węzeł docelowy.\\
+Danymi wyjściowymi są przewidywane wyniki dopasowania użytkownika do przedmiotu.
 
+\subsection{Uniwersalność}
+Algorytm może być stosowany w różnych domenach, ale wymaga odpowiedniego grafu wiedzy który trzeba przygotować przed procesem uczenia. Dodatkowo jego 
+złożoność obliczeniowa sprawia, że może być problematyczny bądź nawet niemożliwy dla większych zbiorów danych.
 	\section{Task 2}
 	W drugim etapie projektu studenci analizują kod dołączony do wybranego
 	w pierwszym etapie artykułu naukowego. W pierwszej kolejności studenci
