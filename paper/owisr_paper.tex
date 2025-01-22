@@ -39,7 +39,164 @@
 	%----------------------------------------------------------------------------------------
 	%	ARTICLE CONTENTS
 	%----------------------------------------------------------------------------------------
+
+	\section{Wyniki eksperymentów}
+	W ramach projektu przeprocesowano zbiór danych amazon-kindle (https://www.kaggle.com/datasets/asaniczka/amazon-kindle-books-dataset-2023-130k-books) do formatu przyjmowanego przez algorytm, oraz powtórzono eksperymenty zmieniając nastawienia hiperparametrów. Ze względu na olbrzymie wymagania obliczeniowe, trening modeli przeprowadzany był przez 50 epok, zamiast domyślnego tysiąca epok które zaproponowali autorzy. Ponadto dokonano ewaluacji na przygotowanym zbiorze.
 	
+	
+	Proces tworzenia zbioru danych:
+	\begin{enumerate}
+		\item Zbiór danych nie zawierał interakcji użytkownik-przedmiot, zatem trzeba było przygotować skrypt który tworzył plik .txt w formacie przyjmowanym przez implementację
+		
+		\item Najpierw oczyszczono zbiór tak, aby zawierał użytkowników którzy wystawili co najmniej 5 ocen.
+		
+		\item Na podstawie tego utworzono zbiór interakcji użytkownik - przedmiot  
+		
+		\begin{verbatim}
+			# user_id item_id1 item_id2 item_id3 ...
+			0 10 20 30
+			1 15 25
+			2 10 25 35
+		\end{verbatim}
+
+	
+		\item Ostatnim krokiem było przygotowanie grafu wiedzy, który zawierał trójki relacji w następujący sposób  
+
+	
+		\item W tym momencie posiadamy główne pliki train.txt, test.txt oraz kg\_final.txt które są akceptowane przez algorytm.
+		
+		\begin{verbatim}
+			# (Książka 0, Napisana przez, Autor 100)
+			0 0 100   
+			# (Książka 0, Sprzedana przez, Amazon.com Services LLC)
+			0 1 200   
+			# (Książka 0, Należy do kategorii, Rodzicielstwo i relacje)
+			0 2 300   
+			# (Książka 0, Opublikowana w, 2015)
+			0 3 2015  
+		\end{verbatim}
+	
+	\end{enumerate}
+
+	Tabele wynikowe:
+	
+	Rozmiar embeddingów 32, learning rate 1e-4, bez pre-treningu:
+	\begin{table}[h]
+		\centering
+		\caption{Amazon-book}
+		\label{tab:metrics_transposed}
+		\scriptsize % Adjust font size if necessary
+		\begin{tabular}{ccccccc}
+			\toprule
+			Metric & 10 Epochs & 20 Epochs & 30 Epochs & 40 Epochs & 50 Epochs \\
+			\midrule
+			Precision@20  & 0.0043  & 0.0047  & 0.0053  & 0.0061  & 0.0065  \\
+			Recall@20     & 0.0386  & 0.0414  & 0.0466  & 0.0549  & 0.0586  \\
+			NDCG@20       & 0.0184  & 0.0190  & 0.0222  & 0.0261  & 0.0280  \\
+			Precision@40  & 0.0036  & 0.0041  & 0.0045  & 0.0051  & 0.0054  \\
+			Recall@40     & 0.0629  & 0.0711  & 0.0792  & 0.0906  & 0.0954  \\
+			NDCG@40       & 0.0245  & 0.0265  & 0.0304  & 0.0351  & 0.0373  \\
+			Precision@60  & 0.0032  & 0.0037  & 0.0040  & 0.0046  & 0.0048  \\
+			Recall@60     & 0.0820  & 0.0937  & 0.1034  & 0.1190  & 0.1257  \\
+			NDCG@60       & 0.0287  & 0.0316  & 0.0358  & 0.0414  & 0.0440  \\
+			Precision@80  & 0.0029  & 0.0034  & 0.0037  & 0.0042  & 0.0044  \\
+			Recall@80     & 0.1003  & 0.1144  & 0.1267  & 0.1439  & 0.1512  \\
+			NDCG@80       & 0.0325  & 0.0358  & 0.0406  & 0.0465  & 0.0492  \\
+			Precision@100 & 0.0027  & 0.0032  & 0.0035  & 0.0039  & 0.0041  \\
+			Recall@100    & 0.1170  & 0.1342  & 0.1477  & 0.1652  & 0.1741  \\
+			NDCG@100      & 0.0357  & 0.0396  & 0.0447  & 0.0507  & 0.0537  \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	Rozmiar embeddingów 32, learning rate 1e-5, bez pre-treningu:
+	\begin{table}[h]
+		\centering
+		\caption{Yelp2018}
+		\label{tab:metrics_transposed}
+		\scriptsize % Adjust font size if necessary
+		\begin{tabular}{ccccccc}
+			\toprule
+			Metric & 10 Epochs & 20 Epochs & 30 Epochs & 40 Epochs & 50 Epochs \\
+			\midrule
+			Precision@20  & 0.0062  & 0.0087  & 0.0102  & 0.0115  & 0.0125  \\
+			Recall@20     & 0.0122  & 0.0183  & 0.0217  & 0.0251  & 0.0271  \\
+			NDCG@20       & 0.0105  & 0.0155  & 0.0185  & 0.0212  & 0.0231  \\
+			Precision@40  & 0.0055  & 0.0077  & 0.0089  & 0.0099  & 0.0107  \\
+			Recall@40     & 0.0200  & 0.0298  & 0.0353  & 0.0398  & 0.0429  \\
+			NDCG@40       & 0.0131  & 0.0193  & 0.0229  & 0.0260  & 0.0282  \\
+			Precision@60  & 0.0052  & 0.0070  & 0.0081  & 0.0090  & 0.0096  \\
+			Recall@60     & 0.0279  & 0.0391  & 0.0457  & 0.0513  & 0.0549  \\
+			NDCG@60       & 0.0156  & 0.0224  & 0.0263  & 0.0299  & 0.0322  \\
+			Precision@80  & 0.0049  & 0.0066  & 0.0076  & 0.0083  & 0.0089  \\
+			Recall@80     & 0.0346  & 0.0474  & 0.0553  & 0.0614  & 0.0655  \\
+			NDCG@80       & 0.0177  & 0.0251  & 0.0294  & 0.0331  & 0.0356  \\
+			Precision@100 & 0.0047  & 0.0062  & 0.0071  & 0.0078  & 0.0083  \\
+			Recall@100    & 0.0403  & 0.0550  & 0.0638  & 0.0701  & 0.0747  \\
+			NDCG@100      & 0.0195  & 0.0275  & 0.0321  & 0.0359  & 0.0385  \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+		
+	Rozmiar embeddingów 32, learning rate 1e-5, bez pre-treningu:
+	\begin{table}[h]
+		\centering
+		\caption{Last-FM}
+		\label{tab:metrics_transposed}
+		\scriptsize % Adjust font size if necessary
+		\begin{tabular}{ccccccc}
+			\toprule
+			Metric & 10 Epochs & 20 Epochs & 30 Epochs & 40 Epochs & 50 Epochs \\
+			\midrule
+			Precision@20  & 0.0051  & 0.0067  & 0.0076  & 0.0081  & 0.0088  \\
+			Recall@20     & 0.0183  & 0.0256  & 0.0296  & 0.0323  & 0.0348  \\
+			NDCG@20       & 0.0114  & 0.0157  & 0.0182  & 0.0202  & 0.0217  \\
+			Precision@40  & 0.0047  & 0.0061  & 0.0068  & 0.0073  & 0.0078  \\
+			Recall@40     & 0.0346  & 0.0462  & 0.0528  & 0.0564  & 0.0609  \\
+			NDCG@40       & 0.0166  & 0.0224  & 0.0256  & 0.0280  & 0.0301  \\
+			Precision@60  & 0.0045  & 0.0057  & 0.0063  & 0.0067  & 0.0072  \\
+			Recall@60     & 0.0499  & 0.0647  & 0.0730  & 0.0777  & 0.0834  \\
+			NDCG@60       & 0.0210  & 0.0277  & 0.0314  & 0.0341  & 0.0365  \\
+			Precision@80  & 0.0043  & 0.0054  & 0.0059  & 0.0063  & 0.0067  \\
+			Recall@80     & 0.0643  & 0.0815  & 0.0909  & 0.0966  & 0.1038  \\
+			NDCG@80       & 0.0248  & 0.0321  & 0.0361  & 0.0390  & 0.0419  \\
+			Precision@100 & 0.0042  & 0.0052  & 0.0057  & 0.0060  & 0.0063  \\
+			Recall@100    & 0.0778  & 0.0975  & 0.1078  & 0.1147  & 0.1219  \\
+			NDCG@100      & 0.0282  & 0.0361  & 0.0404  & 0.0436  & 0.0464  \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	Dla zbioru amazon-kindle wyniki prezentują się nastepująco:
+	Rozmiar embeddingów 32, learning rate 1e-4, bez pre-treningu:
+	\begin{table}[h]
+		\centering
+		\caption{Amazon-kindle}
+		\label{tab:random_metrics}
+		\scriptsize % Adjust font size if necessary
+		\begin{tabular}{ccccccc}
+			\toprule
+			Metric & 10 Epochs & 20 Epochs & 30 Epochs & 40 Epochs & 50 Epochs \\
+			\midrule
+			Precision@20  & 0.0059  & 0.0049  & 0.0070  & 0.0073  & 0.0059  \\
+			Recall@20     & 0.0340  & 0.0211  & 0.0184  & 0.0212  & 0.0204  \\
+			NDCG@20       & 0.0210  & 0.0179  & 0.0110  & 0.0178  & 0.0224  \\
+			Precision@40  & 0.0061  & 0.0048  & 0.0083  & 0.0074  & 0.0056  \\
+			Recall@40     & 0.0424  & 0.0271  & 0.0274  & 0.0267  & 0.0262  \\
+			NDCG@40       & 0.0237  & 0.0218  & 0.0138  & 0.0230  & 0.0271  \\
+			Precision@60  & 0.0050  & 0.0041  & 0.0077  & 0.0083  & 0.0048  \\
+			Recall@60     & 0.0540  & 0.0314  & 0.0307  & 0.0343  & 0.0331  \\
+			NDCG@60       & 0.0290  & 0.0256  & 0.0171  & 0.0295  & 0.0302  \\
+			Precision@80  & 0.0054  & 0.0040  & 0.0075  & 0.0086  & 0.0057  \\
+			Recall@80     & 0.0596  & 0.0395  & 0.0345  & 0.0441  & 0.0415  \\
+			NDCG@80       & 0.0375  & 0.0292  & 0.0205  & 0.0329  & 0.0344  \\
+			Precision@100 & 0.0062  & 0.0040  & 0.0061  & 0.0075  & 0.0046  \\
+			Recall@100    & 0.0681  & 0.0482  & 0.0443  & 0.0489  & 0.0524  \\
+			NDCG@100      & 0.0426  & 0.0324  & 0.0237  & 0.0384  & 0.0428  \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+
+	Największy problem sprawiało utworzenie samego zbioru danych, gdyż wymagało ono od nas opracowania grafu wiedzy. Ponadto, ontologia tego grafu nie opierała się na Freebase, tak jak w przypadku pozostałych zbiorów danych, więc nie jesteśmy do końca pewni jej poprawności. Największym ograniczeniem zaś był czas treningu modelu, dla 50 epok trening jednego modelu na cPU trwał około 20 godzin na stacji roboczej (z procesorem i7 14700). Po modernizacji kodu i środowiska tak, aby korzystać z GPU, czas treningu dla 50 epok skrócił się do około 2,5 godziny. 
 	\section{Introduction}
 	
 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie. Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl. Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit.
