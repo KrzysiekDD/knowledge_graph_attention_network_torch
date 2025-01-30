@@ -255,85 +255,61 @@ Danymi wyjściowymi są przewidywane wyniki dopasowania użytkownika do przedmio
 \subsection{Uniwersalność}
 Algorytm może być stosowany w różnych domenach, ale wymaga odpowiedniego grafu wiedzy który trzeba przygotować przed procesem uczenia. Dodatkowo jego 
 złożoność obliczeniowa sprawia, że może być problematyczny bądź nawet niemożliwy dla większych zbiorów danych.
-	\section{Task 2}
-	W drugim etapie projektu studenci analizują kod dołączony do wybranego
-	w pierwszym etapie artykułu naukowego. W pierwszej kolejności studenci
-	powinni skupić się na sposobie zaimplementowania proponowanej przez
-	autorów artykułu metody, w tym na poprawność implementacji oraz ciekawe
-	rozwiązania techniczne.
-	W kolejnym kroku studenci powinni przeanalizować sposób
-	przeprowadzenia eksperymentu. Jaki zbiór danych został użyty? W jaki sposób
-	dokonano podziału danych? Z jakich metod i miar skorzystano? Czy protokół
-	oceny algorytmu odpowiada problemowi, który autorzy artykułu chcieli
-	rozwiązać?
-	W ostatniej części etapu studenci powinni powtórzyć eksperyment opisany
-	w wybranym artykule z wykorzystaniem analizowanego we wcześniejszych
-	krokach kodu. Co należy zrobić, aby uruchomić kod? Czy wystarczy jedno
-	uruchomienie, czy np. istnieje plik konfiguracyjny, który należy modyfikować,
-	aby otrzymać wszystkie raportowane w artykule wyniki? Czy wyniki zgadzają się
-	z tym, które zostały zaraportowane w artykule przez autorów? Jeżeli nie, to
-	dlaczego tak jest? Jakie mogą być tego konsekwencje?
+	
+\section{Przegląd metod rekomendacyjnych}
 
-	\subsection{Prezentacja do Etapu II}
-	Prezentacja z Etapu II powinna zawierać podstawowe informacje
-	o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków
-	zespołu projektowego oraz informacje o analizowanym artykule, tj. nazwiska
-	autorów i tytuł. 
-	Poniżej podano elementy merytoryczne prezentacji. (Jeżeli czegoś z poniższych
-	nie można zastosować dla konkretnego tematu, to powinno zostać pominięte – 
-	ewentualnie umieszczone na slajdzie, ale nie omówione podczas prezentacji.)
-	\begin{enumerate}
-		\item Omówienie algorytmu, czyli streszczenie etapu 1 celem zrozumienia
-		dalszej części prezentacji przez kolegów (tylko i aż tyle!).
-		\item Analiza kodu
-		\begin{enumerate}
-			\item Poprawność implementacji (błędy metody i merytoryczne, tj.
-			niezgodność z opisem metody).
-			\item Ciekawe rozwiązania techniczne, np. optymalizacja obliczeń itp.
-		\end{enumerate}
-		\item Opis użytego w eksperymencie zbioru/zbiorów danych
-		\begin{enumerate}
-			\item Jaki był cel zbierania zbioru?
-			\item Kto jest twórcą/właścicielem zbioru?
-			\item Jakie dane zawiera?
-			\item Co one oznaczają?
-			\item Jakie są wartości dla podstawowych charakterystyk zbioru danych?
-			\begin{enumerate}
-				\item Ilość ocen, użytkowników i produktów.
-				\item Średnie ilości ocen na użytkownika/produkt.
-				\item Gęstość macierzy ocen.
-				\item Dodatkowe informacje zawarte w zbiorze charakterystyczne dla
-				rozwiązywanego problemu/proponowanej metody.
-			\end{enumerate}
-		\end{enumerate}
-		\item Analiza eksperymentu
-		\begin{enumerate}
-			\item Z jakich metod ewaluacji skorzystano?
-			\item Z jakich miar oceny systemów rekomendacyjnych skorzystano? Dlaczego?
-			\item Czy wykorzystano odpowiedni zbiór danych do rozwiązywanego
-			problemu?
-			\item W jaki sposób dokonano podziału danych? Czy przeprowadzano na
-			nich jakieś dodatkowe transformacje?
-			\item Czy protokół oceny algorytmu odpowiada problemowi, który autorzy
-			artykułu chcieli rozwiązać?
-		\end{enumerate}
-		\item Wykonanie kodu
-		\begin{enumerate}
-			\item W jaki sposób uruchamia się program?
-			\item Czy istnieją jakieś pliki konfiguracyjne? Jakie? Do czego służą?
-			\item Jak długo trzeba czekać na wyniki? (nie wymaga się podawania
-			dokładnych danych).
-		\end{enumerate}
-		\item Wyniki i wnioski
-		\begin{enumerate}
-			\item Wyniki własnego wykonania w zestawieniu z wynikami z artykułu.
-			\item Czy wyniki się różnią?
-			\item Jaka może być tego przyczyna?
-			\item Jakie mogą być tego konsekwencje?
-			\item Czy uważasz, że algorytm został poprawnie zwalidowany? Dlaczego?
-			\item Czy widzisz sposób na ulepszenie/modyfikację tego eksperymentu?
-		\end{enumerate}
-	\end{enumerate}
+Systemy rekomendacyjne stanowią kluczowy element nowoczesnych aplikacji internetowych, umożliwiając personalizację treści na podstawie analizy zachowań użytkowników. W niniejszej sekcji przedstawiono główne podejścia stosowane w systemach rekomendacyjnych wraz z ich zaletami i ograniczeniami.
+
+\subsection{Filtracja kolaboratywna}
+Filtracja kolaboratywna (ang. \textit{Collaborative Filtering, CF}) opiera się na analizie wzorców zachowań użytkowników w celu przewidywania ich preferencji. Wyróżnia się dwa główne podejścia:
+\begin{itemize}
+	\item \textit{User-based CF} – rekomendacje są generowane na podstawie podobieństwa między użytkownikami,
+	\item \textit{Item-based CF} – rekomendacje bazują na podobieństwie między przedmiotami.
+\end{itemize}
+Zaletą metody jest jej niezależność od treści przedmiotów, jednak problemem pozostaje efekt zimnego startu oraz skomplikowana skalowalność w przypadku dużych zbiorów danych.
+
+\subsection{Dekompozycja macierzy (Matrix Factorization)}
+Dekompozycja macierzy (ang. \textit{Matrix Factorization, MF}), np. metoda SVD (ang. \textit{Singular Value Decomposition}) lub ALS (ang. \textit{Alternating Least Squares}), redukuje wymiarowość danych poprzez reprezentację interakcji użytkownik-przedmiot w przestrzeni ukrytych cech. Pozwala to na identyfikację wzorców preferencji, lecz metoda ta nadal cierpi na problem zimnego startu i słabo modeluje skomplikowane zależności.
+
+\subsection{Filtracja oparta na treści}
+Podejście oparte na treści (ang. \textit{Content-Based Filtering}) analizuje cechy przedmiotów (np. gatunek filmu, słowa kluczowe w artykule) w celu przewidywania preferencji użytkownika. Metoda ta dobrze sprawdza się w przypadku nowych użytkowników, jednak może prowadzić do efektu \textit{filter bubble}, czyli zbyt homogenicznych rekomendacji.
+
+\subsection{Metody wykorzystujące głębokie sieci neuronowe}
+Głębokie sieci neuronowe (ang. \textit{Deep Learning-based Recommendations}), np. \textit{Neural Collaborative Filtering (NCF)} lub autoenkodery, pozwalają na modelowanie nieliniowych zależności w danych. Chociaż zapewniają wysoką jakość rekomendacji, wymagają znacznych zasobów obliczeniowych oraz dużych zbiorów danych do skutecznego działania.
+
+\subsection{Rekomendacje oparte na grafach}
+Metody oparte na grafach (ang. \textit{Graph-Based Recommendations}), takie jak \textit{Graph Neural Networks (GNN)} czy \textit{Knowledge Graph Attention Network (KGAT)}, modelują relacje między użytkownikami i przedmiotami w postaci struktur grafowych. Takie podejście umożliwią lepsze uchwycenie kontekstowych zależności, lecz ich implementacja jest kosztowna obliczeniowo.
+
+\subsection{Podejścia hybrydowe}
+Hybrydowe systemy rekomendacyjne łączą powyższe podejścia w celu uzyskania bardziej precyzyjnych wyników. Przykładem jest system rekomendacyjny Netflixa, który integruje filtrację kolaboratywną, analizę treści oraz uczenie głębokie. Choć hybrydowe podejścia są bardzo skuteczne, ich implementacja jest złożona i wymaga znacznych zasobów obliczeniowych.
+
+\subsection{Podsumowanie}
+Tabela \ref{tab:comparison} przedstawia porównanie kluczowych metod rekomendacyjnych pod kątem zalet i ograniczeń.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		\textbf{Metoda} & \textbf{Zalety} & \textbf{Ograniczenia} \\
+		\hline
+		Filtracja kolaboratywna & Wysoka skuteczność przy dużych danych & Problem zimnego startu, skalowalność \\
+		\hline
+		Matrix Factorization & Kompaktowa reprezentacja danych & Nie modeluje skomplikowanych zależności \\
+		\hline
+		Filtracja oparta na treści & Nie wymaga dużych zbiorów użytkowników & Filter bubble, wymaga cech przedmiotów \\
+		\hline
+		Deep Learning & Wysoka jakość rekomendacji & Wymaga dużych danych, koszt obliczeniowy \\
+		\hline
+		Graph-Based & Modeluje złożone relacje & Kosztowna implementacja \\
+		\hline
+		Podejścia hybrydowe & Najlepsza jakość rekomendacji & Złożona integracja, wysokie wymagania obliczeniowe \\
+		\hline
+	\end{tabular}
+	\caption{Porównanie metod rekomendacyjnych}
+	\label{tab:comparison}
+\end{table}
+
+\section{Porównanie istniejących technologii}
 
 	\section{Task 3}
 	W trzecim etapie projektu studenci, korzystając z wiedzy zdobytej 
