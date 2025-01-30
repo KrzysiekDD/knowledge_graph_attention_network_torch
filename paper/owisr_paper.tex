@@ -252,6 +252,58 @@ osadzeń w zależności od węzłów, co pozwala na bardziej elastyczne modelowa
 Danymi wejściowymi grafu są trójki relacji między węzłami, w formacie (h, r, t), gdzie h to węzeł początkowy, r to relacja między węzłami, a t to węzeł docelowy.\\
 Danymi wyjściowymi są przewidywane wyniki dopasowania użytkownika do przedmiotu.
 
+\subsection{Warstwy osadzania i atencji}
+
+\paragraph{Warstwa osadzania} Knowledge Graph Attention Network (KGAT) wykorzystuje warstwę embeddingu do reprezentowania encji i relacji w grafie wiedzy jako wektorów liczbowych. Model ten bazuje na metodzie osadzania grafów wiedzy TransR, która umożliwia modelowanie semantyki relacji między encjami.
+
+\paragraph{Osadzanie encji i relacji} Każda encja \( h \), \( t \) i relacja \( r \) w grafie wiedzy jest reprezentowana jako wektor w przestrzeni wektorowej. Przekształcanie osadzeń odbywa się poprzez macierz transformacji \( W_r \), która rzutuje encje do przestrzeni specyficznej dla danej relacji:
+\begin{equation}
+    e_r(h) + e_r \approx e_r(t),
+\end{equation}
+co oznacza, że wektor encji początkowej powinien być bliski wektorowi encji docelowej po zastosowaniu transformacji relacyjnej.
+
+\paragraph{Funkcja kosztu} W celu optymalizacji osadzeń KGAT minimalizuje funkcję kosztu, opartą na rangowej stracie logistycznej:
+\begin{equation}
+    L_{KG} = \sum_{(h,r,t,t')} - \ln \sigma \left( g(h, r, t') - g(h, r, t) \right),
+\end{equation}
+co pozwala na skuteczne rozróżnianie prawdziwych i fałszywych relacji w grafie.
+
+\paragraph{Warstwy atencji i propagacji embeddingu} Aby efektywnie modelować zależności wysokiego rzędu w grafie wiedzy, KGAT stosuje propagację embeddingów inspirowaną sieciami grafowymi (Graph Neural Networks, GNN) oraz mechanizmem atencji (attention mechanism). 
+
+\paragraph{Propagacja informacji} Dla każdej encji \( h \), nowa reprezentacja jest wyliczana na podstawie jej sąsiednich węzłów \( t \) oraz relacji \( r \). Wartość propagacji kontroluje współczynnik tłumienia \( \pi(h, r, t) \), który określa ilość informacji przekazywanej z węzła \( t \) do \( h \):
+\begin{equation}
+    e_{N_h} = \sum_{(h,r,t) \in N_h} \pi(h, r, t) e_t.
+\end{equation}
+
+\paragraph{Mechanizm atencji} Aby poprawić jakość rekomendacji, KGAT wykorzystuje mechanizm atencji do dynamicznego przypisywania różnych wag do sąsiednich węzłów w trakcie propagacji embeddingów. Waga relacji \( \pi(h, r, t) \) jest obliczana jako:
+\begin{equation}
+    \pi(h, r, t) = (W_r e_t)^\top \tanh(W_r e_h + e_r),
+\end{equation}
+po czym wartości te są normalizowane za pomocą funkcji softmax:
+\begin{equation}
+    \pi(h, r, t) = \frac{\exp(\pi(h, r, t))}{\sum_{(h,r',t') \in N_h} \exp(\pi(h, r', t'))}.
+\end{equation}
+Dzięki temu model może selektywnie wzmacniać istotne zależności między encjami.
+
+\paragraph{Agregacja informacji} Ostateczna reprezentacja węzła \( h \) jest sumą jego oryginalnej reprezentacji oraz propagowanych embeddingów, co można zapisać jako:
+\begin{equation}
+    e_h^{(1)} = f(e_h, e_{N_h}).
+\end{equation}
+KGAT testuje różne strategie agregacji, w tym:
+% \begin{itemize}
+    % \item \textbf{Sumowanie (GCN Aggregator):} $f_{GCN} = \text{LeakyReLU}(W(e_h + e_{N_h}))$,
+    % \item \textbf{Konkatenację (GraphSAGE Aggregator):} $f_{GraphSage} = \text{LeakyReLU}(W(e_h \| e_{N_h}))$,
+    % \item \textbf{Interakcję dwukierunkową (Bi-Interaction Aggregator):} $f_{Bi-Interaction} = \text{LeakyReLU}(W_1(e_h + e_{N_h})) + \text{LeakyReLU}(W_2(e_h \odot e_{N_h}))$.
+% \end{itemize}
+
+\paragraph{Wielowarstwowa propagacja} Model KGAT może iteracyjnie propagować embeddingi przez wiele warstw, co pozwala uchwycić zależności wysokiego rzędu:
+\begin{equation}
+    e_h^{(l)} = f(e_h^{(l-1)}, e_{N_h}^{(l-1)}).
+\end{equation}
+Zastosowanie kilku warstw umożliwia modelowi uwzględnienie relacji o wyższych rzędach, co poprawia jakość rekomendacji.
+
+\paragraph{Podsumowanie} Warstwy embeddingu i atencji w KGAT umożliwiają efektywne modelowanie wysokorzędowych zależności w grafie wiedzy. Mechanizm atencji pozwala na selektywne ważenie informacji od sąsiadujących węzłów, a propagacja embeddingów umożliwia hierarchiczne przekazywanie informacji. Dzięki temu KGAT osiąga lepsze wyniki w rekomendacjach niż wcześniejsze metody, jednocześnie oferując lepszą interpretowalność wyników.
+
 \subsection{Uniwersalność}
 Algorytm może być stosowany w różnych domenach, ale wymaga odpowiedniego grafu wiedzy który trzeba przygotować przed procesem uczenia. Dodatkowo jego 
 złożoność obliczeniowa sprawia, że może być problematyczny bądź nawet niemożliwy dla większych zbiorów danych.
@@ -286,28 +338,29 @@ Hybrydowe systemy rekomendacyjne łączą powyższe podejścia w celu uzyskania 
 \subsection{Podsumowanie}
 Tabela \ref{tab:comparison} przedstawia porównanie kluczowych metod rekomendacyjnych pod kątem zalet i ograniczeń.
 
-\begin{table}[h]
-	\centering
-	\begin{tabular}{|c|c|c|}
-		\hline
-		\textbf{Metoda} & \textbf{Zalety} & \textbf{Ograniczenia} \\
-		\hline
-		Filtracja kolaboratywna & Wysoka skuteczność przy dużych danych & Problem zimnego startu, skalowalność \\
-		\hline
-		Matrix Factorization & Kompaktowa reprezentacja danych & Nie modeluje skomplikowanych zależności \\
-		\hline
-		Filtracja oparta na treści & Nie wymaga dużych zbiorów użytkowników & Filter bubble, wymaga cech przedmiotów \\
-		\hline
-		Deep Learning & Wysoka jakość rekomendacji & Wymaga dużych danych, koszt obliczeniowy \\
-		\hline
-		Graph-Based & Modeluje złożone relacje & Kosztowna implementacja \\
-		\hline
-		Podejścia hybrydowe & Najlepsza jakość rekomendacji & Złożona integracja, wysokie wymagania obliczeniowe \\
-		\hline
-	\end{tabular}
-	\caption{Porównanie metod rekomendacyjnych}
-	\label{tab:comparison}
-\end{table}
+
+\begin{table*}[t]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Metoda} & \textbf{Zalety} & \textbf{Ograniczenia} \\
+        \hline
+        Filtracja kolaboratywna & Wysoka skuteczność przy dużych danych & Problem zimnego startu, skalowalność \\
+        \hline
+        Matrix Factorization & Kompaktowa reprezentacja danych & Nie modeluje skomplikowanych zależności \\
+        \hline
+        Filtracja oparta na treści & Nie wymaga dużych zbiorów użytkowników & Filter bubble, wymaga cech przedmiotów \\
+        \hline
+        Deep Learning & Wysoka jakość rekomendacji & Wymaga dużych danych, koszt obliczeniowy \\
+        \hline
+        Graph-Based & Modeluje złożone relacje & Kosztowna implementacja \\
+        \hline
+        Podejścia hybrydowe & Najlepsza jakość rekomendacji & Złożona integracja, wysokie wymagania obliczeniowe \\
+        \hline
+    \end{tabular}
+    \caption{Porównanie metod rekomendacyjnych}
+    \label{tab:comparison}
+\end{table*}
 
 \section{Porównanie istniejących technologii}
 
