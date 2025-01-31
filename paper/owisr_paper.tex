@@ -219,29 +219,28 @@
 
 	Największy problem sprawiało utworzenie samego zbioru danych, gdyż wymagało ono od nas opracowania grafu wiedzy. Ponadto, ontologia tego grafu nie opierała się na Freebase, tak jak w przypadku pozostałych zbiorów danych, więc nie jesteśmy do końca pewni jej poprawności. Największym ograniczeniem zaś był czas treningu modelu, dla 50 epok trening jednego modelu na cPU trwał około 20 godzin na stacji roboczej (z procesorem i7 14700). Po modernizacji kodu i środowiska tak, aby korzystać z GPU, czas treningu dla 50 epok skrócił się do około 2,5 godziny. 
 	\section{Introduction}
-	
 	\section{Opis metody}
-	Sieci grafowe, takie jak Knowledge Graph Attention Network, wykorzystują graf wiedzy  do wzbogacenia systemów rekomendacyjnych. W tradycyjnych metodach, takich jak filtrowanie kolaboracyjne
+	Sieci grafowe, takie jak Knowledge Graph Attention Network, wykorzystują graf wiedzy  do wzbogacenia systemów rekomendacyjnych. W tradycyjnych metodach, takich jak filtrowanie kolaboracyjne \cite{schafer2007collaborative}
 	czy modele nadzorowanego uczenia, interakcje użytkownika z przedmiotami traktowane są jako niezależne zdarzenia, co ogranicza zdolność do wykorzystania informacji kontekstowych takich jak atrybuty przedmiotów, profile użytkowników itp.
 
-KGAT wprowadza innowacyjne podejście, łącząc graf wiedzy z grafem użytkownik-przedmiot w jedną hybrydową strukturę - graf wiedzy kolaboracyjnej (CKG). 
+KGAT wprowadza innowacyjne podejście, łącząc graf wiedzy z grafem użytkownik-przedmiot w jedną hybrydową strukturę - graf wiedzy kolaboracyjnej (CKG) \cite{zhang2016collaborative}. 
 Istotnym jego elementem jest modelowanie relacji wyższego rzędu, które uwzględniają pośrednie powiązania między użytkownikami a przedmiotami poprzez wspólne atrybuty 
 (na przykład wspólny reżyser filmów któe można zarekomendować innemu użytkownikowi na bazie historii oglądania innego użytkownika). 
 Aby to osiągnąć, KGAT stosuje:
 Rekurencyjną propagację osadzeń(embeddings), w ramach któej osadzenia każdego węzła są aktualizowane na podstawie informacji od sąsiadów, co pozwala wydajnie uchwycić relacje wyższego rzędu, oraz 
-agregację opartą na uwadze (attention), czyli attention mechanism który pozwala modelowi przypisywać różne wagi sąsiadom, uwzględniając wagę ich istotności w kontekście rekomendacji.
+agregację opartą na uwadze (attention), czyli attention mechanism który pozwala modelowi przypisywać różne wagi sąsiadom, uwzględniając wagę ich istotności w kontekście rekomendacji \cite{vaswani2017attention}.
 Zalety sieci grafowych:
 \begin{itemize}
 	\item Efektywne wykorzystanie informacji dodatkowych: Sieci grafowe skutecznie integrują cechy przedmiotów, profile użytkowników i inne dane kontekstowe, co poprawia wyniki rekomendacji.
-\item Modelowanie relacji wyższego rzędu: KGAT potrafi uchwycić dalekie powiązania między węzłami, co jest problematyczne dla tradycyjnych metod.
-\item Interpretowalność: Mechanizm uwagi pozwala interpretować, które relacje miały największy wpływ na wyniki modelu.
+\item Modelowanie relacji wyższego rzędu: KGAT potrafi uchwycić dalekie powiązania między węzłami, co jest problematyczne dla tradycyjnych metod  \cite{ying2018graph}.
+\item Interpretowalność: Mechanizm uwagi pozwala interpretować, które relacje miały największy wpływ na wyniki modelu \cite{chen2017attentive}.
 \item Brak potrzeby ręcznego definiowania ścieżek: W przeciwieństwie do metod opartych na ścieżkach, KGAT nie wymaga ręcznego definiowania ścieżek, co oszczędza czas i zasoby.
 \end{itemize}
 
 Wady sieci grafowych:
 \begin{itemize}
-	\item Wysokie wymagania obliczeniowe: Liczba węzłów i relacji rośnie eksponencjalnie wraz ze wzrostem złożoności grafu, co może być problematyczne dla większych problemów.
-	\item Złożoność modelowania relacji: Relacje wyższego rzędu wnoszą różny wkład do rekomendacji, co wymaga precyzyjnego ważenia i selekcji.
+	\item Wysokie wymagania obliczeniowe: Liczba węzłów i relacji rośnie eksponencjalnie wraz ze wzrostem złożoności grafu, co może być problematyczne dla większych problemów  \cite{kipf2017semi}.
+	\item Złożoność modelowania relacji: Relacje wyższego rzędu \cite{hamilton2017inductive} wnoszą różny wkład do rekomendacji, co wymaga precyzyjnego ważenia i selekcji.
 	\item Brak interpretowalności w niektórych modelach: Chociaż KGAT stawia na interpretowalność, inne podejścia (np. regularizacyjne) mogą być trudniejsze do zrozumienia.
 \end{itemize}
 \section{Opis architektury}
@@ -255,16 +254,16 @@ Algorytm KGAT składa się z trzech głównych komponentów:
 \end{itemize}
 \subsection{Parametry Algorytmu}
 Wśród parametrów modelu możemy wyróżnić hiperparametry, w tym przypadku wymiar warstwy osadzeń i liczba wartsw propagacji. Dodatkowo algorytm dynamicznie wybiera rozmiary
-osadzeń w zależności od węzłów, co pozwala na bardziej elastyczne modelowanie relacji oraz wagi warstwy attention (warstwy uwagi. wagi uwagi brzmiały na tyle głupio że wolę używeać angielskiego).
+osadzeń w zależności od węzłów, co pozwala na bardziej elastyczne modelowanie relacji oraz wagi warstwy attention.
 \subsection{Format danych wejściowych}
 Danymi wejściowymi grafu są trójki relacji między węzłami, w formacie (h, r, t), gdzie h to węzeł początkowy, r to relacja między węzłami, a t to węzeł docelowy.\\
 Danymi wyjściowymi są przewidywane wyniki dopasowania użytkownika do przedmiotu.
 
 \subsection{Warstwy osadzania i atencji}
 
-\paragraph{Warstwa osadzania} Knowledge Graph Attention Network (KGAT) wykorzystuje warstwę embeddingu do reprezentowania encji i relacji w grafie wiedzy jako wektorów liczbowych. Model ten bazuje na metodzie osadzania grafów wiedzy TransR, która umożliwia modelowanie semantyki relacji między encjami.
+\paragraph{Warstwa osadzania} Knowledge Graph Attention Network (KGAT) wykorzystuje warstwę embeddingu do reprezentowania encji i relacji w grafie wiedzy jako wektorów liczbowych \cite{cao2019unifying}. Model ten bazuje na metodzie osadzania grafów wiedzy TransR, która umożliwia modelowanie semantyki relacji między encjami.
 
-\paragraph{Osadzanie encji i relacji} Każda encja \( h \), \( t \) i relacja \( r \) w grafie wiedzy jest reprezentowana jako wektor w przestrzeni wektorowej. Przekształcanie osadzeń odbywa się poprzez macierz transformacji \( W_r \), która rzutuje encje do przestrzeni specyficznej dla danej relacji:
+\paragraph{Osadzanie encji i relacji} Każda encja \( h \), \( t \) i relacja \cite{cao2018neural} \( r \) w grafie wiedzy jest reprezentowana jako wektor w przestrzeni wektorowej. Przekształcanie osadzeń odbywa się poprzez macierz transformacji \( W_r \), która rzutuje encje do przestrzeni specyficznej dla danej relacji:
 \begin{equation}
     e_r(h) + e_r \approx e_r(t),
 \end{equation}
@@ -276,7 +275,7 @@ co oznacza, że wektor encji początkowej powinien być bliski wektorowi encji d
 \end{equation}
 co pozwala na skuteczne rozróżnianie prawdziwych i fałszywych relacji w grafie.
 
-\paragraph{Warstwy atencji i propagacji embeddingu} Aby efektywnie modelować zależności wysokiego rzędu w grafie wiedzy, KGAT stosuje propagację embeddingów inspirowaną sieciami grafowymi (Graph Neural Networks, GNN) oraz mechanizmem atencji (attention mechanism). 
+\paragraph{Warstwy atencji i propagacji embeddingu} Aby efektywnie modelować zależności wysokiego rzędu w grafie wiedzy, KGAT stosuje propagację embeddingów inspirowaną sieciami grafowymi (Graph Neural Networks, GNN) oraz mechanizmem atencji (attention mechanism) \cite{glorot2010understanding}. 
 
 \paragraph{Propagacja informacji} Dla każdej encji \( h \), nowa reprezentacja jest wyliczana na podstawie jej sąsiednich węzłów \( t \) oraz relacji \( r \). Wartość propagacji kontroluje współczynnik tłumienia \( \pi(h, r, t) \), który określa ilość informacji przekazywanej z węzła \( t \) do \( h \):
 \begin{equation}
@@ -318,18 +317,19 @@ złożoność obliczeniowa sprawia, że może być problematyczny bądź nawet n
 	
 \section{Przegląd metod rekomendacyjnych}
 
-Systemy rekomendacyjne stanowią kluczowy element nowoczesnych aplikacji internetowych, umożliwiając personalizację treści na podstawie analizy zachowań użytkowników. W niniejszej sekcji przedstawiono główne podejścia stosowane w systemach rekomendacyjnych wraz z ich zaletami i ograniczeniami.
+Systemy rekomendacyjne stanowią kluczowy element nowoczesnych aplikacji internetowych, umożliwiając personalizację treści na podstawie analizy zachowań użytkowników \cite{rendle2009bpr}. W niniejszej sekcji przedstawiono główne podejścia stosowane w systemach rekomendacyjnych wraz z ich zaletami i ograniczeniami.
 
 \subsection{Filtracja kolaboratywna}
-Filtracja kolaboratywna (ang. \textit{Collaborative Filtering, CF}) opiera się na analizie wzorców zachowań użytkowników w celu przewidywania ich preferencji. Wyróżnia się dwa główne podejścia:
+Filtracja kolaboratywna (ang. \textit{Collaborative Filtering, CF}) opiera się na analizie wzorców zachowań użytkowników w celu przewidywania ich preferencji \cite{he2016ups}. Wyróżnia się dwa główne podejścia:
 \begin{itemize}
 	\item \textit{User-based CF} – rekomendacje są generowane na podstawie podobieństwa między użytkownikami,
-	\item \textit{Item-based CF} – rekomendacje bazują na podobieństwie między przedmiotami.
+	\item \textit{Item-based CF} – rekomendacje bazują na podobieństwie między przedmiotami \cite{linden2003amazon}.
 \end{itemize}
-Zaletą metody jest jej niezależność od treści przedmiotów, jednak problemem pozostaje efekt zimnego startu oraz skomplikowana skalowalność w przypadku dużych zbiorów danych.
+Zaletą metody jest jej niezależność od treści przedmiotów, jednak problemem pozostaje efekt zimnego startu oraz skomplikowana skalowalność w przypadku dużych zbiorów danych \cite{koren2009matrix}.
+
 
 \subsection{Dekompozycja macierzy (Matrix Factorization)}
-Dekompozycja macierzy (ang. \textit{Matrix Factorization, MF}), np. metoda SVD (ang. \textit{Singular Value Decomposition}) lub ALS (ang. \textit{Alternating Least Squares}), redukuje wymiarowość danych poprzez reprezentację interakcji użytkownik-przedmiot w przestrzeni ukrytych cech. Pozwala to na identyfikację wzorców preferencji, lecz metoda ta nadal cierpi na problem zimnego startu i słabo modeluje skomplikowane zależności.
+Dekompozycja macierzy (ang. \textit{Matrix Factorization, MF}), np. metoda SVD (ang. \textit{Singular Value Decomposition}) \cite{cao2018joint} lub ALS (ang. \textit{Alternating Least Squares}), redukuje wymiarowość danych poprzez reprezentację interakcji użytkownik-przedmiot w przestrzeni ukrytych cech \cite{koren2009matrix}. Pozwala to na identyfikację wzorców preferencji, lecz metoda ta nadal cierpi na problem zimnego startu i słabo modeluje skomplikowane zależności.
 
 \subsection{Filtracja oparta na treści}
 Podejście oparte na treści (ang. \textit{Content-Based Filtering}) analizuje cechy przedmiotów (np. gatunek filmu, słowa kluczowe w artykule) w celu przewidywania preferencji użytkownika. Metoda ta dobrze sprawdza się w przypadku nowych użytkowników, jednak może prowadzić do efektu \textit{filter bubble}, czyli zbyt homogenicznych rekomendacji.
@@ -341,7 +341,7 @@ Głębokie sieci neuronowe (ang. \textit{Deep Learning-based Recommendations}), 
 Metody oparte na grafach (ang. \textit{Graph-Based Recommendations}), takie jak \textit{Graph Neural Networks (GNN)} czy \textit{Knowledge Graph Attention Network (KGAT)}, modelują relacje między użytkownikami i przedmiotami w postaci struktur grafowych. Takie podejście umożliwią lepsze uchwycenie kontekstowych zależności, lecz ich implementacja jest kosztowna obliczeniowo.
 
 \subsection{Podejścia hybrydowe}
-Hybrydowe systemy rekomendacyjne łączą powyższe podejścia w celu uzyskania bardziej precyzyjnych wyników. Przykładem jest system rekomendacyjny Netflixa, który integruje filtrację kolaboratywną, analizę treści oraz uczenie głębokie. Choć hybrydowe podejścia są bardzo skuteczne, ich implementacja jest złożona i wymaga znacznych zasobów obliczeniowych.
+Hybrydowe systemy rekomendacyjne łączą powyższe podejścia w celu uzyskania bardziej precyzyjnych wyników. Przykładem jest system rekomendacyjny Netflixa, który integruje filtrację kolaboratywną, analizę treści oraz uczenie głębokie \cite{zhou2018deep}. Choć hybrydowe podejścia są bardzo skuteczne, ich implementacja jest złożona i wymaga znacznych zasobów obliczeniowych.
 
 \subsection{Podsumowanie}
 Tabela \ref{tab:comparison} przedstawia porównanie kluczowych metod rekomendacyjnych pod kątem zalet i ograniczeń.
@@ -382,9 +382,9 @@ Implementacja Knowledge Graph Attention Network (KGAT) w systemach rekomendacyjn
 	wiedzy (KG) zawierającymi atrybuty przedmiotów. Dopasowanie identyfikatorów przedmiotów z logów interakcji do encji w KG 
 	często wymaga ręcznej adnotacji lub automatycznej identyfikacji encji, co może wprowadzać szum \cite{wang2019kgat}.
 
-    \item \textbf{Rzadkość i pokrycie}: Efektywność KGAT zależy od gęstości połączeń wysokiego rzędu w CKG. Rzadkie dane o 
+    \item \textbf{Rzadkość i pokrycie}: Efektywność KGAT zależy od gęstości połączeń wysokiego rzędu w CKG. Rzadkie \cite{he2017neural} dane o 
 	interakcjach lub niekompletne grafy wiedzy (np. brakujące trójki encja-relacja-encja) ograniczają zdolność modelu do 
-	propagowania embeddingów przez ścieżki wielohopowe \cite{wang2019kgat}.
+	propagowania embeddingów przez ścieżki wielohopowe \cite{he2018nais}.
     
     \item \textbf{Złożoność obliczeniowa}: Rekurencyjna propagacja embeddingów w dużych CKG wymaga znacznych zasobów 
 	obliczeniowych. Zbiory danych muszą równoważyć złożoność grafu z ograniczeniami sprzętowymi, aby uniknąć nadmiernego czasu 
@@ -483,101 +483,6 @@ Model KGAT nauczył się charakterystycznych wzorców atencji:
 		\end{enumerate}
 	\end{enumerate}
 
-	\section{Task 4}
-	W czwartym etapie projektu studenci, korzystając z planu eksperymentu
-	zaprojektowanego w trzecim etapie, przeprowadzają eksperyment naukowy,
-	analizują jego wyniki i formułują wnioski.
-	W pierwszej części czwartego etapu studenci powinni wykonać dwa
-	eksperymenty zgodnie z planem opisanym w sprawozdaniu do etapu trzeciego.
-	Istotna jest tutaj zgodność z opisanym planem. Jeżeli wystąpią jakiekolwiek
-	trudności z realizacją zaplanowanych w eksperymencie czynności, studenci
-	powinni opisać te problemy wraz z rozwiązaniem, które zostało zastosowane.
-	Wszelkie modyfikacje planu również powinny zostać skrupulatnie opisane.
-	Po wykonaniu każdego z eksperymentów, studenci powinni zebrać
-	otrzymane wyniki w wygodnej do analizy formie, np. wykres, tabela. Dobrze by
-	było, gdyby zostały przedstawione w takiej formie, która umożliwia porównanie
-	otrzymanych wyników z tymi z oryginalnego artykułu (w uzasadnionych
-	przypadkach nie jest to konieczne). Otrzymane wyniki powinny zostać
-	przeanalizowane samodzielnie, jak również porównane z tymi z oryginalnego
-	artykułu (o ile to możliwe). Na podstawie planu modyfikacji i wyników oraz
-	oryginalnego artykułu, studenci powinni wyciągnąć wnioski z przeprowadzonych
-	badań (dla każdego eksperymentu osobno).
-	W ostatniej części etapu czwartego studenci podsumowują pracę ze
-	wszystkich dotychczasowych etapów i wyciągają wnioski końcowe. Kluczowe
-	jest zidentyfikowanie, czy podczas przeprowadzonych eksperymentów powstała
-	nowa wiedza o badanym algorytmie (i opisanie jej, jeśli tak). Możliwe jest tu
-	uwzględnienie wszelkich uwag dotyczących oryginalnej metody, procedury
-	ewaluacji, zaimplementowanych modyfikacjach i otrzymanych wyników.
-
-	\subsection{Prezentacja do Etapu IV}
-	Prezentacja z Etapu IV powinna zawierać podstawowe informacje
-	o autorach, tj. imiona, nazwiska i numery indeksów wszystkich członków
-	zespołu projektowego oraz informacje o analizowanym artykule, tj. nazwiska
-	autorów i tytuł. 
-	Poniżej podano ramowe elementy merytoryczne sprawozdania.
-	\begin{enumerate}
-		\item Analizowany algorytm
-		\begin{itemize}
-			\item Krótkie przypomnienie, co robi analizowany algorytm.
-		\end{itemize}
-		\item Eksperymenty
-		\begin{enumerate}
-			\item Przebieg eksperymentu
-			\begin{itemize}
-				\item Dokładny opis przeprowadzonego eksperymentu.
-				\item Czy udało się przeprowadzić modyfikację zgodnie z założonym planem? Jeśli nie, to co się zmieniło?
-				\item Czy wystąpiły jakieś niespodziewane problemy? Jeśli tak, to jakie?
-			\end{itemize}
-			\item Wyniki
-			\begin{itemize}
-				\item Dokładny opis otrzymanych wyników z eksperymentu wraz z tabelami i/lub wykresami.
-			\end{itemize}
-			\item Porównanie wyników i wnioski
-			\begin{itemize}
-				\item Czy wyniki różnią się od wyników otrzymanych przez autorów oryginalnego artykułu? Jeśli tak, to czy są lepsze czy gorsze? Jak myślisz, dlaczego tak jest?
-				\item Jeśli modyfikacją było nowe zastosowanie metody, to czy po przeprowadzonym eksperymencie możemy uznać, że metoda sprawdzi się w tym zastosowaniu? Dlaczego? Itd.
-			\end{itemize}
-		\end{enumerate}
-		\item Wnioski końcowe
-		\begin{itemize}
-			\item Co możesz powiedzieć o oryginalnym algorytmie i własnych modyfikacjach po przeprowadzeniu eksperymentów?
-			\item Czy możesz wysnuć jakieś wnioski z wszystkich eksperymentów (z artykułu i własnych)?
-			\item Czy powstała nowa wiedza podczas realizacji projektu? Jeśli tak, to jaka? Itp.
-		\end{itemize}
-	\end{enumerate}
-
-	\section{Task 5}
-	\subsection{Przebieg Etapu V}
-	W piątym etapie projektu studenci przygotowują artykuł naukowy zgodnie
-	z załączonym szablonem.
-	Artykuł powinien zawierać wszystkie kluczowe informacje dotyczące
-	wszystkich wcześniejszych etapów projektu, ze szczególnym naciskiem na etap
-	czwarty (własny eksperyment i wnioski).
-
-	\subsection{Sprawozdanie do Etapu V}
-	Sprawozdanie z Etapu V będzie stanowił artykuł naukowy, który powinien
-	zawierać podstawowe informacje o autorach, tj. imiona i nazwiska wszystkich
-	członków zespołu projektowego oraz informacje o analizowanym artykule, tj.
-	nazwiska autorów i tytuł. Ponadto, artykuł powinien zawierać następujące
-	elementy:
-	\begin{enumerate}
-		\item Wprowadzenie do problematyki.
-		\item Przegląd stanu wiedzy/istniejących modyfikacji algorytmu
-		\item Analizowany algorytm
-		\item Przeprowadzone eksperymenty wraz z wynikami
-		\item Wnioski końcowe
-	\end{enumerate}
-	Dokładny dobór treści w ramach punktów jest pozostawiony studentom
-	i podlega ocenie.
-	Artykuł powinien być napisany w języku angielskim z wykorzystaniem
-	załączonego szablonu LaTeX. Długość artykułu powinna wynosić 10-14 stron
-	(łącznie z bibliografią).
-
-	\subsection{Forma i sposób zaliczenia Etapu V}
-	Za etap można otrzymać maksymalnie 8 punktów. Do zaliczenia zadania
-	wymagane jest otrzymanie minimum 4 punkty. Oceniany będzie dobór i sposób
-	zaprezentowania treści. Termin wgrania artykułów upływa 21.01.2024 o godz.
-	23:59.
 
 	%----------------------------------------------------------------------------------------
 	%	 REFERENCES
